@@ -3,6 +3,9 @@ nav {
     justify-content: space-between;
     padding: 0 10%;
     background-color: black;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 nav img {
@@ -32,4 +35,8 @@ nav img {
 
 .nav-link:active {
     background-color: greenyellow;
+}
+
+.page {
+    height: 4000px;
 }

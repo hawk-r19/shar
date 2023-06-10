@@ -43,5 +43,4 @@
     box-sizing: border-box;
     width: min(2000px, 80%);
     margin: auto;
-    background-color: lightslategray;
 }

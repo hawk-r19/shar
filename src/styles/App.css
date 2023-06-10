@@ -1,5 +1,5 @@
 .app {
     --blue_light: #f8fff6;
     --green_transparent: #3bff0526;
-    --box_bg_color: var(--green_transparent);
+    --home_box_bg_color: var(--green_transparent);
 }

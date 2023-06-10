@@ -47,7 +47,7 @@
 }
 
 .home-content > div {
-    background-color: var(--box_bg_color);
+    background-color: var(--home_box_bg_color);
     margin: 20px;
     padding: 50px;
     border-radius: 50px;

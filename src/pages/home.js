@@ -45,7 +45,7 @@ export default function Home() {
                 <div className='about-div'>
                     <img className='about-pic' src={require('../imgs/shar_students_posed.jpg')} alt='pic with student' />
                     <div className='about'>
-                        <Link to='/' className='about-link'>About Me</Link>
+                        <Link to='about' className='about-link'>About Me</Link>
                         <div className='about-text'>{aboutText}</div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ export default function Nav() {
         <nav>
             <div className='nav-left'>
                 <div className='nav-link nav-about'>About</div>
-                <Link className='nav-link nav-schedule' to='/'>Schedule a Lesson!</Link>
+                <Link className='nav-link nav-schedule' to='/'>Get Lessons</Link>
             </div>
             <Link className='nav-link nav-home' to='/'><Logo className='logo' /></Link>
             <div className='nav-right'>

@@ -1,0 +1,5 @@
+.home-page {
+    padding-top: 5vh;
+    height: 150vh;
+    background-color: var(--home_bg_color);
+}

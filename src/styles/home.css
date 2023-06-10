@@ -6,15 +6,16 @@
 }
 
 .hero-div-inner {
-    width: min(2000px, 80%);
+    width: min(1300px, 90%);
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .hero-fade {
-    height: 500px;
+    height: 600px;
     position: relative;
+    margin-left: 50px;
 }
 
 .hero-pic {
@@ -28,7 +29,7 @@
     top: 0;
     left: 0;
     position: absolute;
-    box-shadow: inset -30px 0 50px -10px black, inset 30px 0 50px -10px black;
+    box-shadow: inset -30px 0 30px -5px black, inset 30px 0 30px -5px black;
 }
 
 .hero-text {
@@ -36,11 +37,105 @@
     font-weight: 600;
     font-size: 2em;
     text-align: center;
+    margin-right: 100px;
 }
 
 .home-content {
-    padding: 20px 60px;
     box-sizing: border-box;
-    width: min(2000px, 80%);
+    width: min(1300px, 90%);
     margin: auto;
+}
+
+.home-content > div {
+    background-color: var(--box_bg_color);
+    margin: 20px;
+    padding: 50px;
+    border-radius: 50px;
+}
+
+.intro-div, .about-div {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.about-div {
+    flex-direction: row-reverse;
+}
+
+.reviews-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-pic, .about-pic {
+    height: 300px;
+    border-radius: 30px;
+}
+
+.intro, .about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about {
+    text-align: end;
+}
+
+.intro-head, .schedule-link, .about-link, .reviews-head {
+    font-weight: 700;
+    font-size: 3em;
+    color: black;
+    line-height: 50%;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.reviews-head {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.intro-text, .schedule-text, .about-text {
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review {
+    background-color: white;
+    padding: 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.has-pic {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.review-pic {
+    height: 120px;
+    border-radius: 20px;
+}
+
+.review-name {
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.review-text {
+    font-weight: 600;
+    font-size: 1.3em;
 }

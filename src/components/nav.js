@@ -11,7 +11,7 @@ export default function Nav() {
                     <div className='nav-links'>
                         <Link className='nav-link nav-home' to='/'>Home</Link>
                         <Link className='nav-link nav-schedule' to='/'>Schedule a Lesson!</Link>
-                        <Link className='nav-link nav-tips' to='/'>Tips</Link>
+                        <Link className='nav-link nav-tips' to='/'>Tennis Tips</Link>
                         {/* <Link className='nav-link nav-about' to='/'>About</Link> */}
                         <Link className='nav-link nav-contact' to='/'>Contact</Link>
                     </div>

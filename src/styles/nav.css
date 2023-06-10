@@ -1,8 +1,40 @@
-.nav-link {
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
 
+nav:before, nav:after {
+    content: ' ';
+    width: 10%;
+}
+
+.nav-left, .nav-right {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 4vw;
+}
+
+.nav-link {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: min(1.7vw, 1.7em);
+}
+
+.nav-home {
+    width: 20%;
+    padding: 10px 0;
 }
 
 .logo {
     fill: green;
-    height: 200px;
+}
+
+.nav-about:hover {
+    cursor: pointer;
 }

@@ -7,5 +7,8 @@
     --ball_green: #CCFF00;
 
     /* actual color palette */
+    --home_bg_color: var(var(--ball_green));
     --home_box_bg_color: var(--green_transparent);
+
+    height: 100vh;
 }

@@ -22,48 +22,7 @@ var reviews = [example1, example2];
 export default function Home() {
     return (
         <div className="page home-page">
-            <div className='hero-div'>
-                <div className="hero-div-inner">
-                    <div className="hero-fade">
-                        <img className='hero-pic' src={require('../imgs/shar_hero.jpg')} alt='hero pic' />
-                    </div>
-                    <div className='hero-text'>Private Tennis Lessons<br/>In South Austin</div>
-                </div>
-            </div>
-            <div className='home-content'>
-                <div className='intro-div'>
-                    <img className='profile-pic' src={require('../imgs/shar_selfie.jpg')} alt='profile pic' />
-                    <div className='intro'>
-                        <div className='intro-head'>Hello!</div>
-                        <div className='intro-text'>{introText}</div>
-                    </div>
-                </div>
-                <div className='schedule-div'>
-                    <Link to='/' className='schedule-link'>Schedule Now</Link>
-                    <div className='schedule-text'>{scheduleText}</div>
-                </div>
-                <div className='about-div'>
-                    <img className='about-pic' src={require('../imgs/shar_students_posed.jpg')} alt='pic with student' />
-                    <div className='about'>
-                        <Link to='about' className='about-link'>About Me</Link>
-                        <div className='about-text'>{aboutText}</div>
-                    </div>
-                </div>
-                <div className='reviews-div'>
-                    <div className='reviews-head'>Reviews</div>
-                    <div className='reviews'>
-                        {reviews.map((review, index) => { return (
-                            <div className={`review${'img_src' in review ? ' has-pic' : ''}`} key={`review${index}`}>
-                                {'img_src' in review ? <img className='review-pic' src={review.img_src} alt='reviewer pic'/> : ''}
-                                <div className='review-info'>
-                                    <div className='review-name'>{review.name}</div>
-                                    <div className='review-text'>{review.review}</div>
-                                </div>
-                            </div>
-                        )})}
-                    </div>
-                </div>
-            </div>
+            
         </div>
     )
 }

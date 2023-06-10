@@ -1,5 +1,11 @@
 .app {
     --blue_light: #f8fff6;
     --green_transparent: #3bff0526;
+
+    /* tennis colors */
+    --court_blue: #3B8ADF;
+    --ball_green: #CCFF00;
+
+    /* actual color palette */
     --home_box_bg_color: var(--green_transparent);
 }

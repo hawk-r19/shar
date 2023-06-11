@@ -123,6 +123,10 @@
     flex-direction: column;
 }
 
+.examples {
+    margin-left: 1vh;
+}
+
 .reviews {
     display: flex;
     flex-direction: column;

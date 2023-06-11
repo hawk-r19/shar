@@ -43,6 +43,7 @@ export default function Home(props) {
                 </div>
                 <div className='reviews-div'>
                     <div className='reviews-head'>Reviews</div>
+                    {'firebase' in props ? '' : <div className='examples'>*Firebase failed to load, these are example reviews</div>}
                     <div className='reviews'>
                         {reviews.map((review, index) => { return (
                             <div className={`review${'img_src' in review ? ' has-pic' : ''}`} key={`review${index}`}>

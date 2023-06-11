@@ -5,17 +5,19 @@
     /* tennis colors */
     --court_blue: #3B8ADF;
     --ball_green: #CCFF00;
-    --blue_light: #b9eefc;
+    --blue_light: #a0e9fd;
     --salmon: #FF8E72;
-    --court_clay: #CB5233;
 
     /* actual color palette */
-    --home_bg_color: var(--court_blue);
-    --home_box_bg_color: var(--green_transparent);
+    --primary_bg_color: var(--court_blue);
+    --second_bg_color: var(--salmon);
+    --home_slash_color: var(--ball_green);
     --logo_color: var(--ball_green);
     --nav_text_color: var(--blue_light);
     --hero_img_color: black;
     --hero_text_color: black;
+    --schedule_btn_alt_color: var(--blue_light);
 
     height: 100vh;
+    font-family: 'Montserrat Alternates';
 }

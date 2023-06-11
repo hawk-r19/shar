@@ -9,7 +9,7 @@ export default function Layout() {
         <React.Fragment>
             <Nav />
             <Outlet />
-            {/* <Footer /> */}
+            <Footer />
         </React.Fragment>
     )
 }

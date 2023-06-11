@@ -1,7 +1,7 @@
 .home-page {
     padding-top: 20vh;
-    height: 150vh;
-    background-color: var(--home_bg_color);
+    padding-bottom: 2em;
+    background-color: var(--primary_bg_color);
 }
 
 .hero-div {
@@ -9,13 +9,14 @@
     justify-content: center;
     align-items: center;
     height: 80vh;
+    margin-bottom: 5em;
 }
 
 #slash {
     position: absolute;
     width: 450px;
     height: 99.1vw;
-    background-color: var(--ball_green);
+    background-color: var(--home_slash_color);
     transform: rotate(.25turn) skewX(15deg) translateX(-4em);
     z-index: 0;
 }
@@ -28,9 +29,91 @@
 
 .hero-text {
     z-index: 1;
-    font-family: 'Montserrat Alternates';
     font-weight: 600;
     font-size: min(4em, 4vw);
     transform: translateY(-10vh);
     color: var(--hero_text_color);
+}
+
+.intro-div, .schedule-div, .about-div, .reviews-div {
+    display: flex;
+    justify-content: space-between;
+    height: min(95vh, 50vw);
+}
+
+.intro-div, .about-div {
+    background-color: var(--second_bg_color);
+}
+
+.intro-div > div, .about-div > div {
+    flex: .5 1 1;
+}
+
+.intro-div {
+    flex-direction: row-reverse;
+}
+
+.pic-container {
+    display: flex;
+    justify-content: center;
+}
+
+.intro-pic, .about-pic {
+    height: 100%;
+}
+
+.intro, .about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5vh 3vw;
+}
+
+.intro-head {
+    font-size: 5vw;
+}
+
+.intro-text, .about-text, .schedule-text {
+    font-size: 2vw;
+    line-height: 1.5;
+}
+
+.about-head {
+    font-size: 4vw;
+}
+
+.schedule-div {
+    height: max(15vh, 12vw);
+    margin: 5vh 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.schedule-link {
+    font-size: 4vw;
+    text-decoration: none;
+    color: black;
+    background-color: var(--home_slash_color);
+    text-align: center;
+    padding: .2em;
+    margin-left: 3%;
+    border-radius: .7em;
+    box-shadow: 0 0 .3em .1em rgba(0, 0, 0, 0.387);
+    transition: background-color .2s;
+    width: 25%;
+}
+
+.schedule-link:hover {
+    font-size: 4.2vw;
+    width: 27%;
+    margin-left: 2%;
+}
+
+.schedule-link:active {
+    background-color: var(--schedule_btn_alt_color);
+}
+
+.schedule-text {
+    width: 64%;
+    margin-right: 3%;
 }

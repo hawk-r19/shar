@@ -8,13 +8,13 @@
     justify-content: center;
     align-items: center;
     height: 80vh;
-    margin-bottom: 5em;
+    margin-bottom: 5vw;
 }
 
 #slash {
     position: absolute;
     width: 450px;
-    height: 99.1vw;
+    height: 100vw;
     background-color: var(--home_slash_color);
     transform: rotate(.25turn) skewX(15deg) translateX(-4em);
     z-index: 0;
@@ -37,7 +37,7 @@
 .intro-div, .schedule-div, .about-div, .reviews-div {
     display: flex;
     justify-content: space-between;
-    height: min(95vh, 50vw);
+    height: min(98vh, 50vw);
 }
 
 .intro-div, .about-div {
@@ -85,7 +85,6 @@
     height: max(15vh, 12vw);
     margin: 5vh 0;
     align-items: center;
-    justify-content: space-between;
 }
 
 .schedule-link {

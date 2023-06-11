@@ -1,5 +1,36 @@
 .home-page {
-    padding-top: 5vh;
+    padding-top: 20vh;
     height: 150vh;
     background-color: var(--home_bg_color);
+}
+
+.hero-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+#slash {
+    position: absolute;
+    width: 450px;
+    height: 99.1vw;
+    background-color: var(--ball_green);
+    transform: rotate(.25turn) skewX(15deg) translateX(-4em);
+    z-index: 0;
+}
+
+.hero-pic {
+    z-index: 1;
+    height: 80vh;
+    fill: var(--hero_img_color);
+}
+
+.hero-text {
+    z-index: 1;
+    font-family: 'Montserrat Alternates';
+    font-weight: 600;
+    font-size: min(4em, 4vw);
+    transform: translateY(-10vh);
+    color: var(--hero_text_color);
 }

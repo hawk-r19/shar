@@ -1,14 +1,21 @@
 .app {
-    --blue_light: #f8fff6;
-    --green_transparent: #3bff0526;
+    /* --blue_light: #f8fff6;
+    --green_transparent: #3bff0526; */
 
     /* tennis colors */
     --court_blue: #3B8ADF;
     --ball_green: #CCFF00;
+    --blue_light: #b9eefc;
+    --salmon: #FF8E72;
+    --court_clay: #CB5233;
 
     /* actual color palette */
     --home_bg_color: var(--court_blue);
     --home_box_bg_color: var(--green_transparent);
+    --logo_color: var(--ball_green);
+    --nav_text_color: var(--blue_light);
+    --hero_img_color: black;
+    --hero_text_color: black;
 
     height: 100vh;
 }

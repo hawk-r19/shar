@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/home.css'
 import {Link} from 'react-router-dom'
+import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 
 import thiem from '../imgs/thiem.png'
 const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience!";
@@ -22,7 +23,11 @@ var reviews = [example1, example2];
 export default function Home() {
     return (
         <div className="page home-page">
-            
+            <div className='hero-div'>
+                <div id='slash'></div>
+                <Hero className='hero-pic' />
+                <div className='hero-text'>Private Tennis Lessons</div>
+            </div>
         </div>
     )
 }

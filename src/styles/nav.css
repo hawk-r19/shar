@@ -33,7 +33,8 @@ nav:before, nav:after {
 .nav-link {
     display: inline-block;
     text-decoration: none;
-    color: black;
+    color: var(--nav_text_color);
+    font-family: 'Montserrat Alternates';
     font-weight: 600;
     font-size: min(1.7vw, 1.7em);
 }
@@ -45,7 +46,7 @@ nav:before, nav:after {
 }
 
 .logo {
-    fill: var(--ball_green);
+    fill: var(--logo_color);
     height: 100%;
 }
 

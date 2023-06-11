@@ -1,6 +1,5 @@
 .home-page {
     padding-top: 20vh;
-    padding-bottom: 2em;
     background-color: var(--primary_bg_color);
 }
 
@@ -69,7 +68,7 @@
     margin: 5vh 3vw;
 }
 
-.intro-head {
+.intro-head, .reviews-head {
     font-size: 5vw;
 }
 
@@ -116,4 +115,43 @@
 .schedule-text {
     width: 64%;
     margin-right: 3%;
+}
+
+.reviews-div {
+    height: 100%;
+    padding: 4vh 4vw;
+    flex-direction: column;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    margin: 2vh 0;
+}
+
+.review {
+    display: flex;
+    align-items: center;
+    padding: 1.5vw 1.5vw;
+    border-radius: 5em;
+    background-color: var(--schedule_btn_alt_color);
+}
+
+.review-pic {
+    width: 10vw;
+    border-radius: 5em;
+}
+
+.review-info {
+    margin-left: 2vw;
+}
+
+.review-name {
+    font-size: 2.5vw;
+    font-weight: 400;
+}
+
+.review-text {
+    font-size: 1.5vw;
 }

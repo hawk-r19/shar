@@ -29,6 +29,24 @@
     color: var(--hero_text_color);
 }
 
+#arrow {
+    height: 12vh;
+    margin: 2vh;
+    float: right;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition: height .5s;
+}
+
+#arrow:hover {
+    cursor: pointer;
+}
+
+#arrow.arrow-hidden {
+    height: 0;
+}
+
 .intro-div, .schedule-div, .about-div, .reviews-div {
     display: flex;
     justify-content: space-between;

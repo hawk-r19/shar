@@ -1,7 +1,9 @@
 import React from 'react'
 import '../styles/home.css'
+import {useEffect, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
+import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import {ex_reviews} from '../components/example_reviews.js';
 
 const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience! More...";
@@ -9,20 +11,39 @@ const scheduleText = "To request a lesson, just click here, fill in your informa
 const aboutText = "Some extra stuff about me, my experience, history, maybe skill level, etc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Hendrerit gravida rutrum quisque non. More...";
 
 export default function Home(props) {
-    var reviews;
+    //getting reviews
+    let reviews;
     if('firebase' in props) reviews = [/* retrieve from firebase */]
     else {
         reviews = ex_reviews;
+    }
+    //return to top arrow visibility
+    const arrow = useRef(null);
+    const arrowRevealOffset = .8; //(once scrolled down 80vh)
+    const arrowStatus = () => {
+        arrow.current.className.baseVal = (window.scrollY >= window.innerHeight * arrowRevealOffset) ?
+            '' : 'arrow-hidden';
+    }
+    useEffect(() => {
+        window.addEventListener('scroll', arrowStatus, {passive: true});
+        return () => window.removeEventListener('scroll', arrowStatus);
+    }, []);
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: document.querySelector("#app").offsetTop,
+            behavior: 'smooth'
+        });
     }
 
     return (
         <div className="page home-page">
             <div className='hero-div'>
                 <div id='slash'></div>
-                <Hero className='hero-pic' />
+                <Hero className='hero-pic'/>
                 <div className='hero-text'>Private Tennis Lessons</div>
             </div>
             <div className='home-content'>
+                <Arrow id='arrow' className='arrow-hidden' ref={arrow} onClick={scrollToTop}/>
                 <div className='intro-div'>
                     <div className='pic-container'><img className='intro-pic' src={require('../imgs/shar_students_posed.jpg')} alt='intro pic' /></div>
                     <div className='intro'>

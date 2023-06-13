@@ -8,7 +8,7 @@ import Contact from './pages/contact.js'
 
 export default function App() {
     return (
-        <div className='app'>
+        <div className='app' id='app'>
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Layout />}>

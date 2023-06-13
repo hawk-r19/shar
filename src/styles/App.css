@@ -23,3 +23,9 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.page {
+    padding-top: 20vh;
+    min-height: 80vh;
+    background-color: var(--primary_bg_color);
+}

@@ -32,10 +32,10 @@ export default function Home(props) {
                     </div>
                 </div>
                 <div className='schedule-div'>
-                    <Link to='/' className='schedule-link'>Schedule Now!</Link>
+                    <Link to='schedule' className='schedule-link'>Schedule Now!</Link>
                     <div className='schedule-text'>{scheduleText}</div>
                 </div>
-                <div className='about-div'>
+                <div className='about-div' id='about'>
                     <div className='pic-container'><img className='about-pic' src={require('../imgs/shar_students_posed.jpg')} alt='pic with student' /></div>
                     <div className='about'>
                         <div className='about-head'>More About Me</div>

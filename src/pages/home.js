@@ -9,7 +9,6 @@ const scheduleText = "To request a lesson, just click here, fill in your informa
 const aboutText = "Some extra stuff about me, my experience, history, maybe skill level, etc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Hendrerit gravida rutrum quisque non. More...";
 
 export default function Home(props) {
-
     var reviews;
     if('firebase' in props) reviews = [/* retrieve from firebase */]
     else {

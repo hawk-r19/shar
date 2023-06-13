@@ -1,22 +1,25 @@
 import '../styles/nav.css'
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {useEffect} from 'react'
+import {Link, useLocation} from 'react-router-dom'
 import {ReactComponent as Logo} from '../imgs/shar_logo.svg'
 
 export default function Nav() {
-    const ScrollToAbout = (e) => {
-        if(document.querySelector("#about") !== null) {
+    let path = useLocation();
+
+    useEffect(() => {
+        if(path.pathname === '/about') {
             window.scrollTo({
                 top: document.querySelector("#about").offsetTop,
                 behavior: "smooth"
             });
         }
-    }
+    }, [path]);
 
     return (
         <nav>
             <div className='nav-left'>
-                <Link className='nav-link nav-about' to='/' onClick={ScrollToAbout}>About</Link>
+                <Link className='nav-link nav-about' to='/about'>About</Link>
                 <Link className='nav-link nav-schedule' to='schedule'>Get Lessons</Link>
             </div>
             <Link className='nav-link nav-home' to='/'><Logo className='logo' /></Link>

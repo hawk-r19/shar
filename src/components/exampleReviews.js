@@ -11,6 +11,6 @@ const example2 = {
     name: "Roger",
     review: `"Shar has a wonderful mix of high standards while making it fun. My kids and I are enjoying our lessons with him immensely!"`
 }
-var ex_reviews = [example1, example2];
+var exReviews = [example1, example2];
 
-export {ex_reviews};
+export default exReviews;

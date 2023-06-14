@@ -26,6 +26,6 @@
 
 .page {
     padding-top: 20vh;
-    min-height: 80vh;
+    min-height: 72vh;
     background-color: var(--primary_bg_color);
 }

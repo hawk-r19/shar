@@ -4,7 +4,7 @@ import {useEffect, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
-import {ex_reviews} from '../components/example_reviews.js';
+import exReviews from '../components/exampleReviews.js';
 
 const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience! More...";
 const scheduleText = "To request a lesson, just click here, fill in your information, select an available time slot, and submit! I'll get back to you as soon as I can to confirm your appointment.";
@@ -15,7 +15,7 @@ export default function Home(props) {
     let reviews;
     if('firebase' in props) reviews = [/* retrieve from firebase */]
     else {
-        reviews = ex_reviews;
+        reviews = exReviews;
     }
     //return to top arrow visibility
     const arrow = useRef(null);

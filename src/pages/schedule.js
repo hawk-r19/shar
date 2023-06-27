@@ -7,6 +7,7 @@ export default function SchedulePage() {
     const [submitted, setSubmitted] = useState(false);
     const [lastBooked, setLastBooked] = useState({});
     const [info, setInfo] = useState({
+        email: '',
         forMe: true,
         name: '',
         studentName: '',
@@ -14,14 +15,17 @@ export default function SchedulePage() {
         skill: '',
         firstTime: true,
         focus: '',
+        avail: '',
         notes: '',
         date: '',
         length: '',
         time: '',
     });
 
-    const onSubmitForm = e => {
+    const submitForm = e => {
         //handling submit to firebase, updating state
+        setLastBooked({...info});
+        setSubmitted(true);
     }
 
     const handleChange = e => {
@@ -45,27 +49,32 @@ export default function SchedulePage() {
 
     return (
         <div className='page schedule-page'>
-            {submitted ? <PostSubmitInfo lastBooked={lastBooked} /> : 
+            {submitted ? <PostSubmitInfo data={lastBooked} /> : 
                 <div className='schedule-form-div'>
                     <div className='initial-info-div'>
-                        initial info div
+                        Some initial info like availability, events, etc
                     </div>
                     <div className='form-div'>
-                        <form onSubmit={onSubmitForm}>
+                        <form>
+                            <div className='email-div'>
+                                <label for='email'>Email:</label>
+                                <input type='text' id='email' name='email'
+                                    value={info.email} onChange={handleChange}/>
+                            </div>
                             <div className='for-me-div'>
                                 <div className='for-me-head'>I'm booking... </div>
                                 <div className='for-me-container'>
                                     <label for='forMe'>For Me:</label>
                                     <input type='radio' id='for-me' name='forMe' 
-                                        value='forMe' checked={info.forMe} onChange={e => {
-                                            setInfo({...info, forMe: e.target.value})
+                                        value={info.forMe} checked={info.forMe} onChange={e => {
+                                            setInfo({...info, forMe: true})
                                         }}/>
                                 </div>
                                 <div className='for-else-container'>
                                     <label for='forElse'>For Someone Else:</label>
                                     <input type='radio' id='for-else' name='forMe' 
-                                        value='forElse' checked={!info.forMe} onChange={e => {
-                                            setInfo({...info, forMe: e.target.value})
+                                        value={!info.forMe} checked={!info.forMe} onChange={e => {
+                                            setInfo({...info, forMe: false})
                                         }}/>
                                 </div>
                             </div>
@@ -106,13 +115,13 @@ export default function SchedulePage() {
                             </div>
                             {!info.firstTime ? <></> :
                                 <div className='availability-div'>
-                                    <div className='availability-info-short'>some availability info</div>
-                                    <label for='availabilty'>What days/times would you like your first lesson to be?</label>
-                                    <input type='text' name='availability' id='availability' onChange={handleChange}/>
+                                    <div className='availability-info-short'>some availability info maybe</div>
+                                    <label for='avail'>What days/times would you like your first lesson to be?</label>
+                                    <input type='text' name='avail' id='avail' value={info.avail} onChange={handleChange}/>
                                 </div>
                             }
                             <div className='notes-div'>
-                                <label for='notes'>Other Concerns/Requirements:</label>
+                                <label for='notes'>Other Concerns/Requests:</label>
                                 <textarea name='notes' id='notes' value={info.notes} onChange={handleChange}/>
                             </div>
                             {info.firstTime ? <></> : 
@@ -138,6 +147,9 @@ export default function SchedulePage() {
                                     </div>
                                 </div>
                             }
+                            <div className='submit-div'>
+                                <div className='submit-button' onClick={submitForm}>Submit</div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -153,10 +165,30 @@ function PaymentInfo(props) {
     )
 }
 
-function PostSubmitInfo(props) {
+function PostSubmitInfo({data, loading}) {
+    const appointment = `Appointment Info: ${data.date}, ${data.time}, for ${data.length}`;
+
     return (
         <div className='post-submit-info-div'>
-            {props.lastBooked}
+            <div className='post-header-div'>
+                <div className='post-header-text'>
+                    Successfully submitted! A confirmation message will be sent your email
+                    at {data.email} with the following information. I will get back to you as
+                    soon as I can to confirm your appointment and discuss any extra details needed.
+                </div>
+                <div className='post-header-sub-text'>Thank you, and I look forward to working with you!</div>
+            </div>
+            <div className='post-submit-info'>
+                <div className='post-for-me'>{data.forMe ? "Scheduling for me." : "Scheduling for someone else."}</div>
+                <div className='post-name-age'>{data.name + ", " + data.age}</div>
+                {data.skill !== '' ? <div className='post-skill'>{"Skill Level: " + data.skill}</div> : <></>}
+                <div className='post-first'>{data.firstTime ? "I am a new client." : "I am a returning client."}</div>
+                <div className='post-focus'>{"Focus: " + data.focus}</div>
+                {data.firstTime ? <div className='post-availability'>{"Availability: " + data.avail}</div> : 
+                    <div className='post-appointment'>{appointment}</div>
+                }
+                <div className='post-notes'>{"Notes: " + data.notes}</div>
+            </div>
         </div>
     )
 }

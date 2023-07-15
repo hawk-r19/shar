@@ -1,5 +1,6 @@
 import '../styles/schedule.css'
 import dayjs from 'dayjs'
+import React from 'react'
 import {useState} from 'react'
 import Calendar from '../components/calendar.js'
 
@@ -22,17 +23,30 @@ export default function SchedulePage() {
         time: '',
     });
 
+    /* var emailInput = document.getElementById('email');
+    var emailWidth = document.getElementById('email-width');
+    useEffect(() => {
+
+    }, []); */
+
     const submitForm = e => {
         //handling submit to firebase, updating state
         setLastBooked({...info});
         setSubmitted(true);
     }
 
+    /* const autoFitWidth = (target) => {
+        var input = document.getElementById(target.id);
+        var inputWidth = document.getElementById(target.id + '-width');
+        //if(inputWidth) 
+    } */
+
     const handleChange = e => {
         setInfo({
             ...info,
             [e.target.name]: e.target.value,
         });
+        //if(e.target.localName == 'input') autoFitWidth(e.target);
     }
 
     /* all info needed:
@@ -56,51 +70,60 @@ export default function SchedulePage() {
                     </div>
                     <div className='form-div'>
                         <form>
-                            <div className='email-div'>
-                                <label for='email'>Email:</label>
-                                <input type='text' id='email' name='email'
-                                    value={info.email} onChange={handleChange}/>
+                            <div className='text-input-div email-div'>Email
+                                <span className='input-wrap email-wrap'>
+                                    <span className='input-width email-width' aria-hidden="true">{info.email}</span>
+                                    <input type='text' id='email' name='email'
+                                        value={info.email} onChange={handleChange}/>
+                                </span>
                             </div>
-                            <div className='for-me-div'>
-                                <div className='for-me-head'>I'm booking... </div>
-                                <div className='for-me-container'>
-                                    <label for='forMe'>For Me:</label>
-                                    <input type='radio' id='for-me' name='forMe' 
-                                        value={info.forMe} checked={info.forMe} onChange={e => {
-                                            setInfo({...info, forMe: true})
-                                        }}/>
-                                </div>
-                                <div className='for-else-container'>
-                                    <label for='forElse'>For Someone Else:</label>
-                                    <input type='radio' id='for-else' name='forMe' 
-                                        value={!info.forMe} checked={!info.forMe} onChange={e => {
-                                            setInfo({...info, forMe: false})
-                                        }}/>
-                                </div>
+                            <div className='for-me-div'>I'm booking... 
+                                <label for='forMe' className='radio-container for-me-container'
+                                    onClick={e => handleChange({target: {name: 'forMe', value: true}})}>
+                                    For Me
+                                    <input type='radio' id='for-me' name='forMe' readOnly={true}
+                                        value={info.forMe} checked={info.forMe}/>
+                                    <span className='checkmark'></span>
+                                </label>
+                                <label for='forElse' className='radio-container for-else-container'
+                                    onClick={e => handleChange({target: {name: 'forMe', value: false}})}>
+                                    For Someone Else
+                                    <input type='radio' id='for-else' name='forMe'  readOnly={true}
+                                        value={!info.forMe} checked={!info.forMe}/>
+                                    <span className='checkmark'></span>
+                                </label>
                             </div>
-                            <div className='form-name-div'>
-                                <div className='name-div'>
-                                    <label for='name'>Your name:</label>
-                                    <input type='text' name='name' id='name' value={info.name} onChange={handleChange}/>
+                            <div className={'form-name-div' + (info.forMe ? '' : ' both-names')}>
+                                <div className='text-input-div name-div'>Your Name
+                                    <span className='input-wrap name-wrap'>
+                                        <span className='input-width name-width' aria-hidden="true">{info.name}</span>
+                                        <input type='text' name='name' id='name' value={info.name} onChange={handleChange}/>
+                                    </span>
                                 </div>
                                 {info.forMe ? null : 
-                                    <div className='student-name-div'>
-                                        <label for='studentName'>Student's Name:</label>
-                                        <input type='text' name='studentName' id='student-name' 
-                                            value={info.studentName} onChange={handleChange}/>
+                                    <div className='text-input-div student-name-div'>Student's Name
+                                        <span className='input-wrap student-name-wrap'>
+                                            <span className='input-width student-name-width' aria-hidden="true">{info.studentName}</span>
+                                            <input type='text' name='studentName' id='student-name' 
+                                                value={info.studentName} onChange={handleChange}/>
+                                        </span>
                                     </div>
                                 }
                             </div>
-                            <div className='age-div'>
-                                <label for='age'>{info.forMe ? 'Age:' : "Student's Age:"}</label>
-                                <input type='number' name='age' id='age' value={info.age} onChange={handleChange}/>
+                            <div className='text-input-div age-div'>{info.forMe ? 'Age' : "Student's Age"}
+                                <span className='input-wrap age-wrap'>
+                                    <span className='input-width age-width' aria-hidden="true">{info.age}</span>
+                                    <input type='number' name='age' id='age' value={info.age} onChange={handleChange}/>
+                                </span>
                             </div>
-                            <div className='skill-div'>
-                                <label for='skill'>{info.forMe ? 'Skill Level:' : "Student's Skill Level:"}</label>
-                                <input type='text' name='skill' id='skill' value={info.skill} onChange={handleChange}/>
+                            <div className='text-input-div skill-div'>
+                                {info.forMe ? 'Skill Level' : "Student's Skill Level"}
+                                <span className='input-wrap skill-wrap'>
+                                    <span className='input-width skill-width' aria-hidden="true">{info.skill}</span>
+                                    <input type='text' name='skill' id='skill' value={info.skill} onChange={handleChange}/>
+                                </span>
                             </div>
-                            <div className='first-time-div'>
-                                <label for='firstTime'>Is this your first time working with me?</label>
+                            <div className='first-time-div'>Is this your first time working with me?
                                 <input type='checkbox' name='firstTime' id='first-time' 
                                     checked={info.firstTime} onChange={e => {
                                         setInfo({
@@ -109,31 +132,41 @@ export default function SchedulePage() {
                                         });
                                     }}/>
                             </div>
-                            <div className='focus-div'>
-                                <label for='focus'>What would you like to work on in this session?</label>
-                                <input type='text' name='focus' id='focus' value={info.focus} onChange={handleChange}/>
+                            <div className='text-input-div focus-div'>What would you like to work on in this session?
+                                <span className='input-wrap focus-wrap'>
+                                    <span className='input-width focus-width' aria-hidden="true">{info.focus}</span>
+                                    <input type='text' name='focus' id='focus' value={info.focus} onChange={handleChange}/>
+                                </span>
                             </div>
                             {!info.firstTime ? <></> :
-                                <div className='availability-div'>
+                                <div className='availability-container'>
                                     <div className='availability-info-short'>some availability info maybe</div>
-                                    <label for='avail'>What days/times would you like your first lesson to be?</label>
-                                    <input type='text' name='avail' id='avail' value={info.avail} onChange={handleChange}/>
+                                    <div className='text-input-div availability-div'>
+                                        What days/times would you like your first lesson to be?
+                                        <span className='input-wrap avail-wrap'>
+                                            <span className='input-width avail-width' aria-hidden="true">{info.avail}</span>
+                                            <input type='text' name='avail' id='avail' value={info.avail} onChange={handleChange}/>
+                                        </span>
+                                    </div>
                                 </div>
                             }
-                            <div className='notes-div'>
-                                <label for='notes'>Other Concerns/Requests:</label>
-                                <textarea name='notes' id='notes' value={info.notes} onChange={handleChange}/>
+                            <div className='notes-div'>Other Concerns/Requests
+                                <span className='notes-wrap'>
+                                    <p className='notes-height' aria-hidden='true'>
+                                        {(info.notes === '') ? 'a' : info.notes}</p>
+                                    <textarea name='notes' id='notes' value={info.notes} onChange={handleChange}/>
+                                </span>
                             </div>
                             {info.firstTime ? <></> : 
                                 <div className='schedule-time-div'>
                                     <Calendar />
                                     <div className='schedule-time-inputs'>
                                         <div className='date-div'>
-                                            <label for='date'>Date:</label>
+                                            <label for='date'>Date</label>
                                             <input type='text' name='date' id='date' value={info.date} onChange={handleChange}/>
                                         </div>
                                         <div className='length-div'>
-                                            <label for='length'>Session Length:</label>
+                                            <label for='length'>Session Length</label>
                                             <select name='length' onChange={handleChange}>
                                                 <option value='60'>60 Minutes</option>
                                                 <option value='75'>75 Minutes</option>
@@ -141,7 +174,7 @@ export default function SchedulePage() {
                                             </select>
                                         </div>
                                         <div className='time-div'>
-                                            <label for='time'>Time:</label>
+                                            <label for='time'>Time</label>
                                             <input type='time' name='time' id='time' value={info.time} onChange={handleChange}/>
                                         </div>
                                     </div>

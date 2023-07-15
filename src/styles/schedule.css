@@ -1,11 +1,209 @@
 .schedule-page {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    font-size: max(2vw, 1em);
+}
+
+.schedule-form-div {
+    display: flex;
+    flex-direction: column;
+    width: min(900px, 90%);
+    background-color: #5a9ade; /* slightly lighter than --blue_light */
+    padding: 1.1em 1.5em;
+    border-radius: 3em;
+}
+
+.text-input-div, .notes-div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0px;
+}
+
+.text-input-div input, .notes-div textarea {
+    background-color: var(--blue_light);
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: .7em;
+    font-family: inherit;
+}
+
+/* expandable inputs ---------------------------------------- */
+.input-wrap {
+    display: flex;
+    position: relative;
+    margin-bottom: .7em;
+}
+
+.input-width {
+    position: relative;
+    font-size: .7em;
+    height: 1em;
+    opacity: 0;
+}
+
+.input-wrap input {
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+    position: absolute;
+}
+/* expandable inputs end ---------------------------------------- */
+
+.form-name-div {
+    display: flex;
+    gap: 2em;
+}
+
+.name-div input, .student-name-div input {
+    min-width: 150px;
+}
+
+/* .text-input-div input:active, .text-input-div input:focus {
+    border: none;
+} */
+
+.for-me-div {
+    display: flex;
+    gap: 10px;
+}
+
+/* radio button styling ---------------------------------------------- */
+.radio-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    font-size: .8em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default radio button */
+  .radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom radio button */
+  .checkmark {
+    height: 1.5vw;
+    width: 1.5vw;
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+    display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3em;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .radio-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  .radio-container input:checked ~ .checkmark {
+    background-color: var(--blue_light);
+  }
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    display: none;
+  }
+  
+  /* Show the indicator (dot/circle) when checked */
+  .radio-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the indicator (dot/circle) */
+  .radio-container .checkmark:after {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: black;
+  }
+/* radio button styling end ---------------------------------------------- */
+
+.age-div {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: .1em;
+}
+
+input[type='number'] {
+    min-width: 10px;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.skill-div input {
+    min-width: 150px;
+}
+
+.availability-div input {
+    min-width: 250px;
+}
+
+.notes-wrap {
+    width: 100%;
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.notes-height {
+    position: relative;
+    opacity: 0;
+    min-height: 1em;
+    white-space: pre-line;
+    font-size: .7em;
+    margin: 0;
+}
+
+.notes-div textarea {
+    resize: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 80px;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.submit-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-button {
+    background-color: var(--ball_green);
+    padding: .5em;
+    border-radius: 1em;
 }
 
 .submit-button:hover {
     cursor: pointer;
+}
+
+.submit-button:active {
+    background-color: white;
 }

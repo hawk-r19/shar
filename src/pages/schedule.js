@@ -4,8 +4,11 @@ import React from 'react'
 import {useState} from 'react'
 import Calendar from '../components/calendar.js'
 
-export default function SchedulePage() {
+export default function SchedulePage({firebase}) {
+    const baseAvailability = '9am to 7pm'; //get from firebase
+    const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
     const today = '2023-07-15'; //get today from dayjs
+    const rate = '35'; //get from firebase
     const [submitted, setSubmitted] = useState(false);
     const [lastBooked, setLastBooked] = useState({});
     const [info, setInfo] = useState({
@@ -21,7 +24,7 @@ export default function SchedulePage() {
         notes: '',
         date: today,
         length: '',
-        time: '',
+        time: '09:00',
     });
 
     const submitForm = e => {
@@ -54,7 +57,16 @@ export default function SchedulePage() {
             {submitted ? <PostSubmitInfo data={lastBooked} backToSchedule={() => setSubmitted(false)}/> : 
                 <div className='schedule-form-div'>
                     <div className='initial-info-div'>
-                        Some initial info like availability, events, etc
+                        <div className='initial-info-header'>Availability:</div>
+                        <div className='initial-info'>
+                            <div className='base-avail'>I am currently available for sessions any day starting from 
+                                {' ' + baseAvailability + (availabilityEvents.length === 0 ? '' : ', with the following exceptions')}.</div>
+                            <ul className='avail-events'>
+                                {availabilityEvents.map((event, index) => 
+                                    <li className='event' key={index}>{event}</li>)}
+                            </ul>
+                            <div className='avail-length'>I typically do 60-90 minute sessions.</div>
+                        </div>
                     </div>
                     <div className='form-div'>
                         <form onSubmit={submitForm}>
@@ -130,7 +142,6 @@ export default function SchedulePage() {
                             </div>
                             {!info.firstTime ? <></> :
                                 <div className='availability-container'>
-                                    <div className='availability-info-short'>some availability info maybe</div>
                                     <div className='text-input-div availability-div'>
                                         What days/times would you like your first lesson to be?
                                         <span className='input-wrap avail-wrap'>
@@ -158,7 +169,7 @@ export default function SchedulePage() {
                                         </div>
                                         <div className='text-input-div time-div'>Time
                                             <input type='time' name='time' id='time' value={info.time} 
-                                                min='08:00' max='19:00' step='300' onChange={handleChange} required/>
+                                                min='09:00' max='19:00' onChange={handleChange} required/>
                                             {/* add limits based on availability */}
                                         </div>
                                     </div>
@@ -176,20 +187,24 @@ export default function SchedulePage() {
                             </div>
                         </form>
                     </div>
-                    <PaymentInfo />
+                    <PaymentInfo rate={rate}/>
                 </div>
             }
         </div>
     )
 }
 
-function PaymentInfo(props) {
+function PaymentInfo({rate}) {
     return (
         <div className='pay-div'>
-            <div className='pay-header'>Payment Info</div>
-            <div className='pay-info'>My rate is $3,000 an hour. I typically use venmo {'(below)'},
-                but we can discuss other payment options of needed.</div>
-            <div className='venmo-div'><img className='venmo' src={require('../imgs/qr.png')}/></div>
+            <div className='pay-left'>
+                <div className='pay-header'>Payment Info</div>
+                <div className='pay-info'>My rate is ${rate} an hour. I typically use venmo,
+                    but we can discuss other payment options if needed.</div>
+            </div>
+            <a className='venmo-link' href='https://www.framer.com/templates/coming-soon-website/' target='_blank' rel='noreferrer'>
+                <img className='venmo' src={require('../imgs/qr.png')} alt='shar venmo'/>
+            </a>
         </div>
     )
 }
@@ -218,7 +233,7 @@ function PostSubmitInfo({data, loading, backToSchedule}) {
                 </div> : 
                 <div className='post-for-else'>
                     <div className='post-name'>{data.name + (data.firstTime ? ", new client." : ", returning client.")}</div>
-                    <div className='post-student-name-age'>{data.studentName + ', ' + data.age}</div>
+                    <div className='post-student-name-age'>{'Student: ' + data.studentName + ', ' + data.age}</div>
                 </div>}
                 {data.skill !== '' ? <div className='post-skill'>Skill Level:<br/><span>{data.skill}</span></div> : <></>}
                 <div className='post-focus'>Focus:<br/><span>{data.focus}</span></div>

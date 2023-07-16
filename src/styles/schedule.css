@@ -3,15 +3,30 @@
     flex-direction: column;
     align-items: center;
     font-size: max(2vw, 1em);
+    padding-bottom: 10px;
 }
 
 .schedule-form-div {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: min(900px, 90%);
-    background-color: #5a9ade; /* slightly lighter than --blue_light */
+    align-items: center;
+    gap: 10px;
+}
+
+.form-div, .initial-info-div, .pay-div, .post-submit-info-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: min(900px, 80%);
+    box-sizing: border-box;
+    background-color: var(--schedule_bg_color); /* slightly lighter than --blue_light */
     padding: 1.1em 1.5em;
     border-radius: 3em;
+}
+
+.text-input-div.email-div {
+    margin-top: 0;
 }
 
 .text-input-div, .notes-div {
@@ -19,6 +34,7 @@
     flex-direction: column;
     align-items: start;
     gap: 0px;
+    margin: 5px 0;
 }
 
 .text-input-div input, .notes-div textarea {
@@ -99,10 +115,10 @@
     width: 1.5vw;
     background-color: white;
     border-radius: 50%;
-    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid black;
   }
   
   /* On mouse-over, add a grey background color */
@@ -112,7 +128,7 @@
   
   /* When the radio button is checked, add a blue background */
   .radio-container input:checked ~ .checkmark {
-    background-color: var(--blue_light);
+    background-color: var(--checkbox_bg_color);
   }
   
   /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -161,6 +177,28 @@ input[type='number']::-webkit-inner-spin-button {
     min-width: 250px;
 }
 
+.schedule-time-inputs {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.length-div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0px;
+}
+
+.length-div select {
+    background-color: var(--blue_light);
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: .7em;
+    font-family: inherit;
+}
+
 .notes-wrap {
     width: 100%;
     position: relative;
@@ -195,9 +233,13 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .submit-button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
     background-color: var(--ball_green);
     padding: .5em;
     border-radius: 1em;
+    border: none;
 }
 
 .submit-button:hover {
@@ -206,4 +248,124 @@ input[type='number']::-webkit-inner-spin-button {
 
 .submit-button:active {
     background-color: white;
+}
+
+/* checkbox styling ------------------------------------------------ */
+/* Customize the label (the container) */
+.first-time-div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+    margin: 5px 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .first-time-div input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkbox {
+    height: 2vw;
+    width: 2vw;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .first-time-div:hover input ~ .checkbox {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .first-time-div input:checked ~ .checkbox {
+    background-color: var(--checkbox_bg_color);
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkbox:after {
+    content: "";
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .first-time-div input:checked ~ .checkbox:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .first-time-div .checkbox:after {
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+/* checkbox styling end ------------------------------------------ */
+
+/* main schedule page styling done ===================================================================== */
+
+.post-header-text {
+    margin-bottom: 10px;
+}
+
+hr {
+    height: 2px;
+    background-color: black;
+    border: none;
+    width: 100%;
+}
+
+.post-submit-info div span {
+    font-size: .8em;
+    margin-left: .5em;
+}
+
+.again-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.again-button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    background-color: var(--ball_green);
+    padding: .5em;
+    border-radius: 1em;
+    border: none;
+}
+
+.again-button:hover {
+    cursor: pointer;
+}
+
+.again-button:active {
+    background-color: white;
+}
+
+.venmo-div {
+    display: flex;
+    justify-content: center;
+}
+
+.venmo {
+    width: 10vw;
 }

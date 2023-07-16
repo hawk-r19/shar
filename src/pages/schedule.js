@@ -5,6 +5,7 @@ import {useState} from 'react'
 import Calendar from '../components/calendar.js'
 
 export default function SchedulePage() {
+    const today = '2023-07-15'; //get today from dayjs
     const [submitted, setSubmitted] = useState(false);
     const [lastBooked, setLastBooked] = useState({});
     const [info, setInfo] = useState({
@@ -18,16 +19,10 @@ export default function SchedulePage() {
         focus: '',
         avail: '',
         notes: '',
-        date: '',
+        date: today,
         length: '',
         time: '',
     });
-
-    /* var emailInput = document.getElementById('email');
-    var emailWidth = document.getElementById('email-width');
-    useEffect(() => {
-
-    }, []); */
 
     const submitForm = e => {
         //handling submit to firebase, updating state
@@ -35,18 +30,11 @@ export default function SchedulePage() {
         setSubmitted(true);
     }
 
-    /* const autoFitWidth = (target) => {
-        var input = document.getElementById(target.id);
-        var inputWidth = document.getElementById(target.id + '-width');
-        //if(inputWidth) 
-    } */
-
     const handleChange = e => {
         setInfo({
             ...info,
             [e.target.name]: e.target.value,
         });
-        //if(e.target.localName == 'input') autoFitWidth(e.target);
     }
 
     /* all info needed:
@@ -63,17 +51,17 @@ export default function SchedulePage() {
 
     return (
         <div className='page schedule-page'>
-            {submitted ? <PostSubmitInfo data={lastBooked} /> : 
+            {submitted ? <PostSubmitInfo data={lastBooked} backToSchedule={() => setSubmitted(false)}/> : 
                 <div className='schedule-form-div'>
                     <div className='initial-info-div'>
                         Some initial info like availability, events, etc
                     </div>
                     <div className='form-div'>
-                        <form>
+                        <form onSubmit={submitForm}>
                             <div className='text-input-div email-div'>Email
                                 <span className='input-wrap email-wrap'>
                                     <span className='input-width email-width' aria-hidden="true">{info.email}</span>
-                                    <input type='text' id='email' name='email'
+                                    <input type='email' id='email' name='email' required
                                         value={info.email} onChange={handleChange}/>
                                 </span>
                             </div>
@@ -94,10 +82,11 @@ export default function SchedulePage() {
                                 </label>
                             </div>
                             <div className={'form-name-div' + (info.forMe ? '' : ' both-names')}>
-                                <div className='text-input-div name-div'>Your Name
+                                <div className='text-input-div name-div'>{info.forMe ? 'Name' : 'Your Name'}
                                     <span className='input-wrap name-wrap'>
                                         <span className='input-width name-width' aria-hidden="true">{info.name}</span>
-                                        <input type='text' name='name' id='name' value={info.name} onChange={handleChange}/>
+                                        <input type='text' name='name' id='name' value={info.name} required
+                                            onChange={handleChange}/>
                                     </span>
                                 </div>
                                 {info.forMe ? null : 
@@ -105,7 +94,7 @@ export default function SchedulePage() {
                                         <span className='input-wrap student-name-wrap'>
                                             <span className='input-width student-name-width' aria-hidden="true">{info.studentName}</span>
                                             <input type='text' name='studentName' id='student-name' 
-                                                value={info.studentName} onChange={handleChange}/>
+                                                value={info.studentName} required onChange={handleChange}/>
                                         </span>
                                     </div>
                                 }
@@ -113,30 +102,31 @@ export default function SchedulePage() {
                             <div className='text-input-div age-div'>{info.forMe ? 'Age' : "Student's Age"}
                                 <span className='input-wrap age-wrap'>
                                     <span className='input-width age-width' aria-hidden="true">{info.age}</span>
-                                    <input type='number' name='age' id='age' value={info.age} onChange={handleChange}/>
+                                    <input type='number' name='age' id='age' value={info.age} required 
+                                        onChange={handleChange}/>
                                 </span>
                             </div>
                             <div className='text-input-div skill-div'>
                                 {info.forMe ? 'Skill Level' : "Student's Skill Level"}
                                 <span className='input-wrap skill-wrap'>
                                     <span className='input-width skill-width' aria-hidden="true">{info.skill}</span>
-                                    <input type='text' name='skill' id='skill' value={info.skill} onChange={handleChange}/>
+                                    <input type='text' name='skill' id='skill' value={info.skill} required
+                                        onChange={handleChange}/>
                                 </span>
-                            </div>
-                            <div className='first-time-div'>Is this your first time working with me?
-                                <input type='checkbox' name='firstTime' id='first-time' 
-                                    checked={info.firstTime} onChange={e => {
-                                        setInfo({
-                                            ...info,
-                                            firstTime: e.target.checked,
-                                        });
-                                    }}/>
                             </div>
                             <div className='text-input-div focus-div'>What would you like to work on in this session?
                                 <span className='input-wrap focus-wrap'>
                                     <span className='input-width focus-width' aria-hidden="true">{info.focus}</span>
-                                    <input type='text' name='focus' id='focus' value={info.focus} onChange={handleChange}/>
+                                    <input type='text' name='focus' id='focus' value={info.focus} required
+                                        onChange={handleChange}/>
                                 </span>
+                            </div>
+                            <div className='first-time-div'
+                                onClick={e => handleChange({target: {name: 'firstTime', value: !info.firstTime}})}>
+                                Is this your first time working with me?
+                                <input type='checkbox' name='firstTime' id='first-time' 
+                                    checked={info.firstTime} readOnly={true}/>
+                                <span className='checkbox'></span>
                             </div>
                             {!info.firstTime ? <></> :
                                 <div className='availability-container'>
@@ -145,8 +135,32 @@ export default function SchedulePage() {
                                         What days/times would you like your first lesson to be?
                                         <span className='input-wrap avail-wrap'>
                                             <span className='input-width avail-width' aria-hidden="true">{info.avail}</span>
-                                            <input type='text' name='avail' id='avail' value={info.avail} onChange={handleChange}/>
+                                            <input type='text' name='avail' id='avail' value={info.avail} 
+                                                onChange={handleChange} required/>
                                         </span>
+                                    </div>
+                                </div>
+                            }
+                            {info.firstTime ? <></> : 
+                                <div className='schedule-time-div'>
+                                    <Calendar />
+                                    <div className='schedule-time-inputs'>
+                                        <div className='text-input-div date-div'>Date
+                                            <input type='date' name='date' id='date' value={info.date}
+                                                required min={today} onChange={handleChange}/>
+                                        </div>
+                                        <div className='length-div'>Session Length
+                                            <select name='length' onChange={handleChange} required>
+                                                <option value='60'>60 Minutes</option>
+                                                <option value='75'>75 Minutes</option>
+                                                <option value='90'>90 Minutes</option>
+                                            </select>
+                                        </div>
+                                        <div className='text-input-div time-div'>Time
+                                            <input type='time' name='time' id='time' value={info.time} 
+                                                min='08:00' max='19:00' step='300' onChange={handleChange} required/>
+                                            {/* add limits based on availability */}
+                                        </div>
                                     </div>
                                 </div>
                             }
@@ -157,49 +171,32 @@ export default function SchedulePage() {
                                     <textarea name='notes' id='notes' value={info.notes} onChange={handleChange}/>
                                 </span>
                             </div>
-                            {info.firstTime ? <></> : 
-                                <div className='schedule-time-div'>
-                                    <Calendar />
-                                    <div className='schedule-time-inputs'>
-                                        <div className='date-div'>
-                                            <label for='date'>Date</label>
-                                            <input type='text' name='date' id='date' value={info.date} onChange={handleChange}/>
-                                        </div>
-                                        <div className='length-div'>
-                                            <label for='length'>Session Length</label>
-                                            <select name='length' onChange={handleChange}>
-                                                <option value='60'>60 Minutes</option>
-                                                <option value='75'>75 Minutes</option>
-                                                <option value='90'>90 Minutes</option>
-                                            </select>
-                                        </div>
-                                        <div className='time-div'>
-                                            <label for='time'>Time</label>
-                                            <input type='time' name='time' id='time' value={info.time} onChange={handleChange}/>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
                             <div className='submit-div'>
-                                <div className='submit-button' onClick={submitForm}>Submit</div>
+                                <button type='submit' className='submit-button'>Submit</button>
                             </div>
                         </form>
                     </div>
+                    <PaymentInfo />
                 </div>
             }
-            <PaymentInfo />
         </div>
     )
 }
 
 function PaymentInfo(props) {
     return (
-        <div className='pay-div'>Payment Info Coming Soon</div>
+        <div className='pay-div'>
+            <div className='pay-header'>Payment Info</div>
+            <div className='pay-info'>My rate is $3,000 an hour. I typically use venmo {'(below)'},
+                but we can discuss other payment options of needed.</div>
+            <div className='venmo-div'><img className='venmo' src={require('../imgs/qr.png')}/></div>
+        </div>
     )
 }
 
-function PostSubmitInfo({data, loading}) {
-    const appointment = `Appointment Info: ${data.date}, ${data.time}, for ${data.length}`;
+/* add schedule again button */
+function PostSubmitInfo({data, loading, backToSchedule}) {
+    const appointment = `Appointment Info: ${data.date}, ${data.time}, for ${data.length} minutes`;
 
     return (
         <div className='post-submit-info-div'>
@@ -207,131 +204,34 @@ function PostSubmitInfo({data, loading}) {
                 <div className='post-header-text'>
                     Successfully submitted! A confirmation message will be sent your email
                     at {data.email} with the following information. I will get back to you as
-                    soon as I can to confirm your appointment and discuss any extra details needed.
+                    soon as I can to confirm your appointment and discuss any extra details as needed.
                 </div>
                 <div className='post-header-sub-text'>Thank you, and I look forward to working with you!</div>
             </div>
+            <hr/>
             <div className='post-submit-info'>
-                <div className='post-for-me'>{data.forMe ? "Scheduling for me." : "Scheduling for someone else."}</div>
-                <div className='post-name-age'>{data.name + ", " + data.age}</div>
-                {data.skill !== '' ? <div className='post-skill'>{"Skill Level: " + data.skill}</div> : <></>}
-                <div className='post-first'>{data.firstTime ? "I am a new client." : "I am a returning client."}</div>
-                <div className='post-focus'>{"Focus: " + data.focus}</div>
-                {data.firstTime ? <div className='post-availability'>{"Availability: " + data.avail}</div> : 
+                {data.forMe ? 
+                <div className='post-for-me'>
+                    <div className='post-name-age'>{data.name + ", " + data.age +
+                        data.firstTime ? ", new client." : ", returning client."}
+                    </div>
+                </div> : 
+                <div className='post-for-else'>
+                    <div className='post-name'>{data.name + (data.firstTime ? ", new client." : ", returning client.")}</div>
+                    <div className='post-student-name-age'>{data.studentName + ', ' + data.age}</div>
+                </div>}
+                {data.skill !== '' ? <div className='post-skill'>Skill Level:<br/><span>{data.skill}</span></div> : <></>}
+                <div className='post-focus'>Focus:<br/><span>{data.focus}</span></div>
+                {data.firstTime ? <div className='post-availability'>Availability:<br/><span>{data.avail}</span></div> : 
                     <div className='post-appointment'>{appointment}</div>
                 }
-                <div className='post-notes'>{"Notes: " + data.notes}</div>
+                <div className='post-notes'>Notes:<br/><span>{data.notes}</span></div>
             </div>
-        </div>
-    )
-}
-
-/* import '../styles/schedule.css'
-import dayjs from 'dayjs'
-import {useState, useRef} from 'react'
-//import ReactCSSTransitionGroup from 'react-transition-group'
-import Direct from '../components/direct.js'
-import Inquiry from '../components/inquiry.js'
-
-export default function SchedulePage() {
-    const [chosen, setChosen] = useState(false);
-    const [direct, setDirect] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
-    const [lastBooked, setLastBooked] = useState({});
-    const [carriedData, setCarriedData] = useState({});
-    const directForm = useRef(null);
-    const inquiryForm = useRef(null);
-
-    const choose = (choice) => {
-        setDirect(choice);
-        setChosen(true);
-    }
-
-    const switchType = () => {
-        setCarriedData({
-            ...carriedData,
-            ...(direct ? directForm.current.getData() : inquiryForm.current.getData())
-        });
-        setDirect(!direct);
-    }
-
-    const submit = (data) => {
-        setLastBooked(data);
-        setSubmitted(true);
-        //submit data to firebase
-        //send google event and email to shar
-        //send email to client
-    }
-
-    return (
-        <div className='page schedule-page'>
-            <div className='current-schedule-container'>
-                {submitted ? <Submitted last={lastBooked} scheduleAgain={() => setSubmitted(false)}/> : (
-                    !chosen ? <ChooseTypeModal choose={choose}/> : 
-                        <>
-                            <TypeSelector direct={direct} switch={switchType} />
-                            {direct ? <Direct ref={directForm} 
-                                        carriedData={carriedData} submit={submit} /> : 
-                                <Inquiry ref={inquiryForm} carriedData={carriedData}  submit={submit} />}
-                            <Payment />
-                        </>
-                    )
-                }
-            </div>
-        </div>
-    )
-}
-
-function Submitted(props) {
-    return (
-        <div className='submitted-div'>
-            submitted
-            <button id='schedule-again' onClick={props.scheduleAgain}>Schedule Again</button>
-        </div>
-    )
-}
-
-function ChooseTypeModal(props) {
-    return (
-        <div className='choose-type-modal'>
-            <div className='choose-side choose-inquiry'>
-                <div className='head-text'>Send me a message:</div>
-                <div className='sub-text'>Choose this option if any of these apply:</div>
-                <div className='bullet-list'>
-                    <div className='reason'> - You are a new customer</div>
-                    <div className='reason'> - You are looking to set up a long-term lesson schedule</div>
-                    <div className='reason'> - You are a new customer</div>
+            <div className='again-button-div'>
+                <div className='again-button' onClick={backToSchedule}>
+                    Schedule Another Appointment
                 </div>
-                <button id='inquiry'
-                    className='choose-type-button'
-                    onClick={() => props.choose(false)}>
-                    Inquiry</button>
             </div>
-            <button id='direct'
-                className='choose-type-button'
-                onClick={() => props.choose(true)}>
-                Direct</button>
         </div>
     )
 }
-
-function TypeSelector(props) {
-    return (
-        <div className='type-selector-div'>
-            <button id='direct'
-                className='switch-type-button'
-                onClick={() => {if(!props.direct) props.switch();}}>
-                Direct</button>
-            <button id='inquiry'
-                className='switch-type-button'
-                onClick={() => {if(props.direct) props.switch();}}>
-                Inquiry</button>
-        </div>
-    )
-}
-
-function Payment(props) {
-    return (
-        <div className='pay-div'>Payment Info Coming Soon</div>
-    )
-} */

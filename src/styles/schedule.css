@@ -183,6 +183,10 @@ input[type='number']::-webkit-inner-spin-button {
     min-width: 150px;
 }
 
+.skill-head-div span {
+    font-size: .7em;
+}
+
 .availability-div input {
     min-width: 250px;
 }
@@ -195,7 +199,7 @@ input[type='number']::-webkit-inner-spin-button {
 .length-div {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     gap: 0px;
 }
 

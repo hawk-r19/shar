@@ -2,16 +2,12 @@ import '../styles/schedule.css'
 import dayjs from 'dayjs'
 import React from 'react'
 import {useState} from 'react'
+import emailjs from '@emailjs/browser'
+import _ from 'lodash'
 import Calendar from '../components/calendar.js'
+import {EMAILJS_KEY} from '../keys/emailjs_key.js'
 
-export default function SchedulePage({firebase}) {
-    const baseAvailability = '9am to 7pm'; //get from firebase
-    const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
-    const today = '2023-07-15'; //get today from dayjs
-    const rate = '35'; //get from firebase
-    const [submitted, setSubmitted] = useState(false);
-    const [lastBooked, setLastBooked] = useState({});
-    const [info, setInfo] = useState({
+const defaultInfoTemplate = {
         email: '',
         forMe: true,
         name: '',
@@ -22,15 +18,44 @@ export default function SchedulePage({firebase}) {
         focus: '',
         avail: '',
         notes: '',
-        date: today,
+        date: '',
         length: '',
         time: '09:00',
-    });
+};
+
+export default function SchedulePage({firebase}) {
+    const baseAvailability = '9am to 7pm'; //get from firebase
+    const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
+    const today = '2023-07-15'; //get today from dayjs
+    const rate = '35'; //get from firebase
+    const [submitted, setSubmitted] = useState(false);
+    const [lastBooked, setLastBooked] = useState({});
+    const [lastEmail, setLastEmail] = useState({...defaultInfoTemplate, date: today});
+    const [info, setInfo] = useState({...defaultInfoTemplate, date: today});
 
     const submitForm = e => {
-        //handling submit to firebase, updating state
+        e.preventDefault();
+        //add submit to firebase
         setLastBooked({...info});
-        setSubmitted(true);
+        var tmplt_params = {
+            ...info,
+            client_email: info.email,
+            client_name: info.name,
+            for: (info.forMe ? 'Me' : info.studentName),
+        }
+        const updateLastEmail = () => {setLastEmail({...info})};
+        var templateID = (info.firstTime ? 'tmplt_new_client' : 'tmplt_returning');
+        if(_.isEqual(info, lastEmail)) {alert('An appointment with this exact information was already sent recently.');}
+        else {
+            emailjs.send('default_service', templateID, tmplt_params, EMAILJS_KEY).then(response => {
+                console.log('EMAILJS SUCCESS', response.status, response.text);
+                updateLastEmail();
+                setSubmitted(true);
+            }, error => {
+                console.log('EMAILJS FAILED', error);
+                alert('Sending email failed, try clicking submit again.');
+            });
+        }
     }
 
     const handleChange = e => {
@@ -54,13 +79,13 @@ export default function SchedulePage({firebase}) {
 
     return (
         <div className='page schedule-page'>
-            {submitted ? <PostSubmitInfo data={lastBooked} backToSchedule={() => setSubmitted(false)}/> : 
+            {submitted ? <PostSubmitInfo data={{...info}} backToSchedule={() => setSubmitted(false)}/> : 
                 <div className='schedule-form-div'>
                     <div className='initial-info-div'>
                         <div className='initial-info-header'>Availability:</div>
                         <div className='initial-info'>
-                            <div className='base-avail'>I am currently available for sessions any day starting from 
-                                {' ' + baseAvailability + (availabilityEvents.length === 0 ? '' : ', with the following exceptions')}.</div>
+                            <div className='base-avail'>I am currently available for 60-90 minute sessions any day starting from 
+                                {' ' + baseAvailability + (availabilityEvents.length === 0 ? '.' : ', with the following exceptions')}.</div>
                             <ul className='avail-events'>
                                 {availabilityEvents.map((event, index) => 
                                     <li className='event' key={index}>{event}</li>)}
@@ -69,35 +94,35 @@ export default function SchedulePage({firebase}) {
                         </div>
                     </div>
                     <div className='form-div'>
-                        <form onSubmit={submitForm}>
+                        <form>
                             <div className='text-input-div email-div'>Email
                                 <span className='input-wrap email-wrap'>
                                     <span className='input-width email-width' aria-hidden="true">{info.email}</span>
-                                    <input type='email' id='email' name='email' required
+                                    <input type='email' id='email' name='email' required autoComplete='on'
                                         value={info.email} onChange={handleChange}/>
                                 </span>
                             </div>
                             <div className='for-me-div'>I'm booking... 
-                                <label for='forMe' className='radio-container for-me-container'
+                                <div className='radio-container for-me-container'
                                     onClick={e => handleChange({target: {name: 'forMe', value: true}})}>
                                     For Me
                                     <input type='radio' id='for-me' name='forMe' readOnly={true}
                                         value={info.forMe} checked={info.forMe}/>
                                     <span className='checkmark'></span>
-                                </label>
-                                <label for='forElse' className='radio-container for-else-container'
+                                </div>
+                                <div className='radio-container for-else-container'
                                     onClick={e => handleChange({target: {name: 'forMe', value: false}})}>
                                     For Someone Else
                                     <input type='radio' id='for-else' name='forMe'  readOnly={true}
                                         value={!info.forMe} checked={!info.forMe}/>
                                     <span className='checkmark'></span>
-                                </label>
+                                </div>
                             </div>
                             <div className={'form-name-div' + (info.forMe ? '' : ' both-names')}>
                                 <div className='text-input-div name-div'>{info.forMe ? 'Name' : 'Your Name'}
                                     <span className='input-wrap name-wrap'>
                                         <span className='input-width name-width' aria-hidden="true">{info.name}</span>
-                                        <input type='text' name='name' id='name' value={info.name} required
+                                        <input type='text' name='name' id='name' value={info.name} required autoComplete='on'
                                             onChange={handleChange}/>
                                     </span>
                                 </div>
@@ -119,7 +144,10 @@ export default function SchedulePage({firebase}) {
                                 </span>
                             </div>
                             <div className='text-input-div skill-div'>
-                                {info.forMe ? 'Skill Level' : "Student's Skill Level"}
+                                <div className='skill-head-div'>
+                                    {info.forMe ? 'Skill Level ' : "Student's Skill Level "}
+                                    <span>ex: new to tennis, beginner, intermediate, 3.0, 4.0, etc</span>
+                                </div>
                                 <span className='input-wrap skill-wrap'>
                                     <span className='input-width skill-width' aria-hidden="true">{info.skill}</span>
                                     <input type='text' name='skill' id='skill' value={info.skill} required
@@ -183,7 +211,7 @@ export default function SchedulePage({firebase}) {
                                 </span>
                             </div>
                             <div className='submit-div'>
-                                <button type='submit' className='submit-button'>Submit</button>
+                                <button onClick={submitForm} className='submit-button'>Submit</button>
                             </div>
                         </form>
                     </div>
@@ -228,7 +256,7 @@ function PostSubmitInfo({data, loading, backToSchedule}) {
                 {data.forMe ? 
                 <div className='post-for-me'>
                     <div className='post-name-age'>{data.name + ", " + data.age +
-                        data.firstTime ? ", new client." : ", returning client."}
+                        (data.firstTime ? ", new client." : ", returning client.")}
                     </div>
                 </div> : 
                 <div className='post-for-else'>

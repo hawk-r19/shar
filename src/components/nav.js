@@ -4,6 +4,10 @@ import {useEffect} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import {ReactComponent as Logo} from '../imgs/shar_logo.svg'
 
+/* TODO:
+    remove link for about, maybe use state, don'd need useLocation/path
+*/
+
 export default function Nav() {
     let path = useLocation();
 

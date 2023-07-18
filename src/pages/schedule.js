@@ -5,7 +5,7 @@ import {useState} from 'react'
 import emailjs from '@emailjs/browser'
 import _ from 'lodash'
 import Calendar from '../components/calendar.js'
-import {EMAILJS_KEY} from '../keys/emailjs_key.js'
+import {EMAILJS_KEY} from '../keys/emailjs.js'
 
 const defaultInfoTemplate = {
         email: '',
@@ -64,18 +64,6 @@ export default function SchedulePage({firebase}) {
             [e.target.name]: e.target.value,
         });
     }
-
-    /* all info needed:
-        Scheduling for yourself or for someone else?
-        your name/student's name - set this to same if above is checked/unchecked
-        your/student's age
-        skill level (optional)
-        is this your first session with me?
-        anything specific you would like to focus on/do?
-        Message/other info or concerns:
-        calendar
-        payment info
-    */
 
     return (
         <div className='page schedule-page'>

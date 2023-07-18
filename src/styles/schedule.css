@@ -56,6 +56,10 @@
     font-family: inherit;
 }
 
+.text-input-div input:focus, .notes-div textarea:focus {
+    background-color: var(--blue_light);
+}
+
 /* expandable inputs ---------------------------------------- */
 .input-wrap {
     display: flex;

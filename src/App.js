@@ -5,6 +5,14 @@ import Layout from './pages/layout.js'
 import SchedulePage from './pages/schedule.js'
 import Tips from './pages/tips.js'
 import Contact from './pages/contact.js'
+import { initializeApp } from 'firebase/app'
+import {firebaseConfig} from './keys/firebase.js'
+
+/* TODO:
+    fix nav to not use a whole new route
+*/
+
+const app = initializeApp(firebaseConfig);
 
 export default function App() {
     return (

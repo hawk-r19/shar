@@ -7,6 +7,11 @@ import _ from 'lodash'
 import Calendar from '../components/calendar.js'
 import {EMAILJS_KEY} from '../keys/emailjs.js'
 
+/* TODO:
+    add loading screen when email is being sent
+    firebase stuff
+*/
+
 const defaultInfoTemplate = {
         email: '',
         forMe: true,

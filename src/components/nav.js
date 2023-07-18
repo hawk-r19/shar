@@ -5,7 +5,7 @@ import {Link, useLocation} from 'react-router-dom'
 import {ReactComponent as Logo} from '../imgs/shar_logo.svg'
 
 /* TODO:
-    remove link for about, maybe use state, don'd need useLocation/path
+    remove link for about, maybe use state, don't need useLocation/path, maybe use useNavigate
 */
 
 export default function Nav() {

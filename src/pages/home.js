@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/home.css'
 import {useEffect, useRef} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js';
@@ -35,6 +35,13 @@ export default function Home(props) {
         });
     }
 
+    //reroute to schedule page
+    const navigate = useNavigate();
+    const toSchedule = e => {
+        e.preventDefault();
+        navigate('/schedule');
+    }
+
     return (
         <div className="page home-page">
             <div className='hero-div'>
@@ -52,7 +59,7 @@ export default function Home(props) {
                     </div>
                 </div>
                 <div className='schedule-div'>
-                    <Link to='schedule' className='schedule-link'>Schedule Now!</Link>
+                    <Link onClick={toSchedule} className='schedule-link'>Schedule Now!</Link>
                     <div className='schedule-text'>{scheduleText}</div>
                 </div>
                 <div className='about-div' id='about'>

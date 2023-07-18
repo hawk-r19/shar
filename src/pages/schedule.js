@@ -1,7 +1,7 @@
 import '../styles/schedule.css'
 import dayjs from 'dayjs'
 import React from 'react'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import emailjs from '@emailjs/browser'
 import _ from 'lodash'
 import Calendar from '../components/calendar.js'
@@ -10,6 +10,7 @@ import {EMAILJS_KEY} from '../keys/emailjs.js'
 /* TODO:
     add loading screen when email is being sent
     firebase stuff
+    scroll to top when first loaded
 */
 
 const defaultInfoTemplate = {
@@ -37,6 +38,14 @@ export default function SchedulePage({firebase}) {
     const [lastBooked, setLastBooked] = useState({});
     const [lastEmail, setLastEmail] = useState({...defaultInfoTemplate, date: today});
     const [info, setInfo] = useState({...defaultInfoTemplate, date: today});
+
+    //scroll to top on render
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, []);
 
     const submitForm = e => {
         e.preventDefault();

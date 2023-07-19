@@ -2,15 +2,22 @@ import React from 'react'
 import '../styles/home.css'
 import {useEffect, useRef} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js';
+
+/* TODO:
+    fix min-height on empty pages
+    fix hero text moving on resize after min-height is hit
+*/
 
 const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience! More...";
 const scheduleText = "To request a lesson, just click here, fill in your information, select an available time slot, and submit! I'll get back to you as soon as I can to confirm your appointment.";
 const aboutText = "Some extra stuff about me, my experience, history, maybe skill level, etc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Hendrerit gravida rutrum quisque non. More...";
 
 export default function Home(props) {
+    var short = useMediaQuery({query: '(max-height: 835px)'});
     //getting reviews
     let reviews;
     if('firebase' in props) reviews = [/* retrieve from firebase */]
@@ -43,9 +50,9 @@ export default function Home(props) {
     }
 
     return (
-        <div className={"page home-page" + (props.mobile ? ' mobile' : '')}>
+        <div className={"page home-page" + (props.mobile ? ' mobile' : '') + (short ? ' short' : '')}>
             <div className='hero-div'>
-                <div id='slash'></div>
+                <div className={'slash' + (short ? ' short' : '')}></div>
                 <Hero className='hero-pic'/>
                 <div className='hero-text'>Private Tennis Lessons</div>
             </div>

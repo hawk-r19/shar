@@ -1,23 +1,38 @@
+.home-page {
+    z-index: 0;
+    padding-top: min(var(--nav-height), var(--nav-max-height));
+}
+
+.home-page.mobile {
+    padding-top: max(var(--nav-mobile-height), var(--nav-mobile-min-height));
+}
+
 .hero-div {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: calc(100vh - min(var(--nav-height), var(--nav-max-height)));
+    min-height: 720px;
     margin-bottom: 5vw;
 }
 
-#slash {
+.home-page.mobile .hero-div {
+    height: calc(100vh - max(var(--nav-mobile-height), var(--nav-mobile-min-height)));
+}
+
+.slash {
     position: absolute;
     width: 450px;
     height: 100vw;
     background-color: var(--home_slash_color);
     transform: rotate(.25turn) skewX(15deg) translateX(-4em);
-    z-index: 0;
+    z-index: 1;
+    margin-top: 7vh;
 }
 
 .hero-pic {
     z-index: 1;
-    height: 80vh;
+    height: 100%; /* was 80vh */
     fill: var(--hero_img_color);
 }
 

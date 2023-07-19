@@ -8,6 +8,7 @@ import {mdiMenu} from '@mdi/js'
 
 /* TODO:
     remove link for about, maybe use state, don't need useLocation/path, maybe use useNavigate
+    make home page link only clickable on logo, maybe useNavigate
 */
 
 export default function Nav({mobile}) {
@@ -29,7 +30,7 @@ export default function Nav({mobile}) {
             <div className='nav-mobile expanded'>
                 <Icon path={mdiMenu} className='nav-menu-icon' onClick={() => setExpanded(false)}/>
                 <div className='expanded-nav-links-div'>
-                    <Link className='nav-home' to='/'><Logo className='logo' /></Link>
+                    <Link className='nav-home' to='/' onClick={() => setExpanded(false)}><Logo className='logo' /></Link>
                     <Link className='nav-link nav-about' to='/about' onClick={() => setExpanded(false)}>About</Link>
                     <Link className='nav-link nav-schedule' to='schedule' onClick={() => setExpanded(false)}>Get Lessons</Link>
                     <Link className='nav-link nav-tips' to='tips' onClick={() => setExpanded(false)}>Tennis Tips</Link>

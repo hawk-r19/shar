@@ -20,19 +20,24 @@
     --schedule_bg_color: #5a9ade;
     --checkbox_bg_color: #31a3ff;
 
-    height: 100vh;
+    --nav-height: max(200px, calc(6vh + 9vw));
+    --nav-max-height: max(25vh, 10vw);
+    --nav-mobile-height: 15vh;
+    --nav-mobile-min-height: 130px;
+    --footer-height: 4vh;
+
     font-family: 'Montserrat Alternates';
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
 .page {
-    padding-top: 20vh;
-    min-height: 73vh;
+    padding-top: min(var(--nav-height), var(--nav-max-height));
+    min-height: calc(calc(100vh - var(--footer-height)) - min(var(--nav-height), var(--nav-max-height)));
     background-color: var(--primary_bg_color);
 }
 
 .page.mobile {
-    padding-top: 10vh;
-    min-height: 81vh;
+    padding-top: max(var(--nav-mobile-height), var(--nav-mobile-min-height));
+    min-height: calc(100vh - max(var(--nav-mobile-height), var(--nav-mobile-min-height)));
 }

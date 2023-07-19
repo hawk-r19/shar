@@ -43,7 +43,7 @@ export default function Home(props) {
     }
 
     return (
-        <div className="page home-page">
+        <div className={"page home-page" + (props.mobile ? ' mobile' : '')}>
             <div className='hero-div'>
                 <div id='slash'></div>
                 <Hero className='hero-pic'/>

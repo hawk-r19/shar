@@ -1,7 +1,7 @@
 import '../styles/tips.css'
 
-export default function Tips() {
+export default function Tips({mobile}) {
     return (
-        <div className='page tips-page'>Tennis Tips Coming Soon!</div>
+        <div className={'page tips-page' + (mobile ? ' mobile' : '')}>Tennis Tips Coming Soon!</div>
     )
 }

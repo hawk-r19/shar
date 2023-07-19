@@ -1,7 +1,7 @@
 import '../styles/contact.css'
 
-export default function Contact() {
+export default function Contact({mobile}) {
     return (
-        <div className='page contact-page'>Contact Page Coming Soon!</div>
+        <div className={'page contact-page' + (mobile ? ' mobile' : '')}>Contact Page Coming Soon!</div>
     )
 }

@@ -29,7 +29,7 @@ const defaultInfoTemplate = {
         time: '09:00',
 };
 
-export default function SchedulePage({firebase}) {
+export default function SchedulePage({firebase, mobile}) {
     const baseAvailability = '9am to 7pm'; //get from firebase
     const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
     const today = '2023-07-15'; //get today from dayjs
@@ -80,7 +80,7 @@ export default function SchedulePage({firebase}) {
     }
 
     return (
-        <div className='page schedule-page'>
+        <div className={'page schedule-page' + (mobile ? ' mobile' : '')}>
             {submitted ? <PostSubmitInfo data={{...info}} backToSchedule={() => setSubmitted(false)}/> : 
                 <div className='schedule-form-div'>
                     <div className='initial-info-div'>

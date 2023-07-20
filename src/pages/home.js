@@ -2,12 +2,12 @@ import React from 'react'
 import '../styles/home.css'
 import {useEffect, useRef} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js';
 
 /* TODO:
-    fix hero text moving on resize after min-height is hit
     footer icons
 */
 
@@ -53,17 +53,22 @@ export default function Home(props) {
         navigate('/schedule');
     }
 
+    //hero image cropping
+    var cropHero = useMediaQuery({query: '(max-width: 375px)'});
+
     return (
         <div className={"page home-page" + (props.mobile ? ' mobile' : '')}>
             <div className='hero-div'>
                 <div className='slash'></div>
-                <Hero className='hero-pic'/>
+                {cropHero ? 
+                    <Hero className='hero-pic' preserveAspectRatio='xMidYMid slice' width='100vw'/>
+                    : <Hero className='hero-pic'/>}
                 <div className='hero-text'>Private Tennis Lessons</div>
             </div>
             <div className='home-content'>
                 <Arrow id='arrow' className='arrow-hidden' ref={arrow} onClick={scrollToTop}/>
                 <div className='intro-div'>
-                    <div className='pic-container'><img className='intro-pic' src={require('../imgs/shar_students_posed.jpg')} alt='intro pic' /></div>
+                    <div className='pic-container'><img className='intro-pic' src={require('../imgs/shar_portrait_crop.png')} alt='intro pic' /></div>
                     <div className='intro'>
                         <div className='intro-head'>Hello!</div>
                         <div className='intro-text'>{introText}</div>

@@ -2,7 +2,7 @@ import '../styles/nav.css'
 import React from 'react'
 import {useEffect, useState} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
-import {ReactComponent as Logo} from '../imgs/shar_logo.svg'
+import {ReactComponent as Logo} from '../imgs/huq_logo.svg'
 import Icon from '@mdi/react'
 import {mdiMenu} from '@mdi/js'
 

@@ -11,6 +11,7 @@ import {EMAILJS_KEY} from '../keys/emailjs.js'
     add loading screen when email is being sent
     firebase stuff
     clean up 'last booked' system
+    get real availability
 */
 
 const defaultInfoTemplate = {
@@ -26,14 +27,14 @@ const defaultInfoTemplate = {
         notes: '',
         date: '',
         length: '',
-        time: '09:00',
+        time: '08:00',
 };
 
 export default function SchedulePage({firebase, mobile}) {
-    const baseAvailability = '9am to 7pm'; //get from firebase
+    const baseAvailability = '9am to 7pm'; //get from firebase | weekdays 6:30, weekends 8am - 8pm
     const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
     const today = '2023-07-15'; //get today from dayjs
-    const rate = '35'; //get from firebase
+    const rate = '35'; //get from firebase | 45 for privates, 30 for duos, 20 for 3+ (all per person)
     const [submitted, setSubmitted] = useState(false);
     const [lastBooked, setLastBooked] = useState({});
     const [lastEmail, setLastEmail] = useState({...defaultInfoTemplate, date: today});
@@ -70,9 +71,6 @@ export default function SchedulePage({firebase, mobile}) {
                 alert('Sending email failed, try clicking submit again.');
             });
         }
-        /* updateLastEmail();
-        console.log(lastEmail);
-        setSubmitted(true); */
     }
 
     const handleChange = e => {

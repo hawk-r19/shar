@@ -1,5 +1,5 @@
 .footer {
-    height: var(--footer-height);
+    height: fit-content;
     padding: .5em 1em;
     background-color: var(--second_bg_color);
     display: flex;
@@ -8,7 +8,7 @@
 }
 
 .footer-left {
-    font-size: .8em;
+    font-size: min(calc(.5vw + 1vh), 1em);
 }
 
 .footer-left a {
@@ -21,8 +21,7 @@
 }
 
 .footer-right img {
-    width: 3em;
-    border-radius: .7em;
+    width: calc(3vw + 3vh);
 }
 
 .footer-right img:hover {

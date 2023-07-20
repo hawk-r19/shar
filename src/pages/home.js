@@ -2,7 +2,6 @@ import React from 'react'
 import '../styles/home.css'
 import {useEffect, useRef} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import { useMediaQuery } from 'react-responsive'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js';
@@ -10,6 +9,7 @@ import exReviews from '../components/exampleReviews.js';
 /* TODO:
     fix min-height on empty pages
     fix hero text moving on resize after min-height is hit
+    footer icons
 */
 
 const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience! More...";
@@ -26,8 +26,10 @@ export default function Home(props) {
     //return to top arrow visibility
     const arrow = useRef(null);
     const arrowRevealOffset = .8; //(once scrolled down 80vh)
+    const arrowOffsetMobile = .6;
     const arrowStatus = () => {
-        arrow.current.className.baseVal = (window.scrollY >= window.innerHeight * arrowRevealOffset) ?
+        arrow.current.className.baseVal = (window.scrollY >= window.innerHeight * 
+            (props.mobile ? arrowOffsetMobile : arrowRevealOffset)) ?
             '' : 'arrow-hidden';
     }
     useEffect(() => {

@@ -63,7 +63,6 @@
     clip-path: inset(0 0 0 0);
     z-index: 1;
     transition: clip-path .7s, z-index 0s .7s;
-    /* transition: z-index 0s .7s; */
 }
 
 .nav-mobile.expanded {

@@ -60,18 +60,21 @@
     height: var(--nav-mobile-height);
     min-height: var(--nav-mobile-min-height);
     position: absolute;
-    z-index: 2;
     clip-path: inset(0 0 0 0);
-    transition: clip-path .7s;
+    z-index: 1;
+    transition: clip-path .7s, z-index 0s .7s;
+    /* transition: z-index 0s .7s; */
 }
 
 .nav-mobile.expanded {
     clip-path: inset(0 0 -250% 0);
+    z-index: 2;
+    transition: clip-path .7s, z-index 0s;
 }
 
 .nav-mobile .nav-menu-icon {
-    height: calc(5vh + 4vw);
-    min-height: 85px;
+    height: calc(6vw + 4vh);
+    min-height: 60px;
     position: absolute;
     z-index: 3;
     transition: transform .7s 0s;

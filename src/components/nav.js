@@ -8,7 +8,6 @@ import {mdiMenu} from '@mdi/js'
 
 /* TODO:
     remove link for about, maybe use state, don't need useLocation/path, maybe use useNavigate
-    animate menu icon
 */
 
 export default function Nav({mobile}) {
@@ -38,7 +37,6 @@ export default function Nav({mobile}) {
             <div className={'nav-mobile' + (expanded ? ' expanded' : '')}>
                 <Icon path={mdiMenu} className='nav-menu-icon' onClick={expanded ? 
                     (() => setExpanded(false)) : (() => setExpanded(true))}/>
-                {/* <ExpandedNav clickHome={clickHome} close={closeNav}/> */}
                 <div className='expanded-nav-links-div'>
                     <div className='nav-home-div'><Logo className='nav-home logo' onClick={clickHome}/></div>
                     <Link className='nav-link nav-about' to='/about' onClick={() => setExpanded(false)}>About</Link>
@@ -59,17 +57,5 @@ export default function Nav({mobile}) {
                 </div>
             </div>}
         </nav>
-    )
-}
-
-function ExpandedNav({clickHome, close}) {
-    return (
-        <div className='expanded-nav-links-div'>
-            <div className='nav-home-div'><Logo className='nav-home logo' onClick={clickHome}/></div>
-            <Link className='nav-link nav-about' to='/about' onClick={close}>About</Link>
-            <Link className='nav-link nav-schedule' to='schedule' onClick={close}>Get Lessons</Link>
-            <Link className='nav-link nav-tips' to='tips' onClick={close}>Tennis Tips</Link>
-            <Link className='nav-link nav-contact' to='contact' onClick={close}>Contact</Link>
-        </div>
     )
 }

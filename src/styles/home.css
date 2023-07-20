@@ -62,7 +62,7 @@
     height: 0;
 }
 
-.intro-div, .schedule-div, .about-div, .reviews-div {
+.intro-div, .about-div, .reviews-div {
     display: flex;
     justify-content: space-between;
     height: min(100vh, 50vw);
@@ -110,8 +110,10 @@
 }
 
 .schedule-div {
-    height: max(15vh, 12vw);
-    margin: 5vh 0;
+    /* height: max(15vh, 12vw); */
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5em 0;
     align-items: center;
 }
 

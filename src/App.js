@@ -11,6 +11,7 @@ import {firebaseConfig} from './keys/firebase.js'
 
 /* TODO:
     fix nav to not use a whole new route
+    fix min page height
 */
 
 const app = initializeApp(firebaseConfig);

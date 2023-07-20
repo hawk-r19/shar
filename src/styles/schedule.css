@@ -25,6 +25,10 @@
     border-radius: 3em;
 }
 
+.form-div {
+    width: max(950px, 50%);
+}
+
 .initial-info {
     margin: 0 1em;
     font-size: .7em;
@@ -214,10 +218,16 @@ input[type='number']::-webkit-inner-spin-button {
     font-family: inherit;
 }
 
+.notes-div {
+    gap: 10px;
+}
+
 .notes-wrap {
     width: 100%;
+    box-sizing: border-box;
+    min-height: 4em;
     position: relative;
-    margin-bottom: 80px;
+    margin-bottom: 10px;
 }
 
 .notes-height {
@@ -227,6 +237,7 @@ input[type='number']::-webkit-inner-spin-button {
     white-space: pre-line;
     font-size: .7em;
     margin: 0;
+    margin-top: 5px;
 }
 
 .notes-div textarea {
@@ -336,8 +347,16 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* main schedule page styling done ===================================================================== */
 
-.post-header-text {
+.post-header-text, .success {
     margin-bottom: 10px;
+}
+
+.emph {
+    font-weight: 500;
+}
+
+.post-submit-info .emph span {
+    font-weight: 400;
 }
 
 hr {
@@ -348,7 +367,7 @@ hr {
 }
 
 .post-submit-info div span {
-    font-size: .8em;
+    font-size: .9em;
     margin-left: .5em;
 }
 
@@ -366,6 +385,7 @@ hr {
     padding: .5em;
     border-radius: 1em;
     border: none;
+    text-align: center
 }
 
 .again-button:hover {
@@ -504,5 +524,14 @@ hr {
 
     .venmo-link {
         margin: 0;
+    }
+
+    .post-submit-info-div {
+        font-size: .7em;
+        padding: 3vw 3vw;
+
+        .again-button-div {
+            margin-top: 10px;
+        }
     }
 }

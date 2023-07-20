@@ -70,6 +70,9 @@ export default function SchedulePage({firebase, mobile}) {
                 alert('Sending email failed, try clicking submit again.');
             });
         }
+        /* updateLastEmail();
+        console.log(lastEmail);
+        setSubmitted(true); */
     }
 
     const handleChange = e => {
@@ -240,7 +243,6 @@ function PaymentInfo({rate}) {
     )
 }
 
-/* add schedule again button */
 function PostSubmitInfo({data, loading, backToSchedule}) {
     const appointment = `Appointment Info: ${data.date}, ${data.time}, for ${data.length} minutes`;
 
@@ -248,30 +250,31 @@ function PostSubmitInfo({data, loading, backToSchedule}) {
         <div className='post-submit-info-div'>
             <div className='post-header-div'>
                 <div className='post-header-text'>
-                    Successfully submitted! A confirmation message will be sent your email
-                    at {data.email} with the following information. I will get back to you as
-                    soon as I can to confirm your appointment and discuss any extra details as needed.
+                    <div className='success emph'>Successfully submitted!</div>
+                    A confirmation message will be sent your email at <span className='email-text emph'>{data.email}</span> with the following 
+                    information. I will get back to you as soon as I can to confirm your appointment 
+                    and discuss any extra details as needed.
                 </div>
-                <div className='post-header-sub-text'>Thank you, and I look forward to working with you!</div>
+                <div className='post-header-sub-text emph'>Thank you, and I look forward to working with you!</div>
             </div>
             <hr/>
             <div className='post-submit-info'>
                 {data.forMe ? 
                 <div className='post-for-me'>
-                    <div className='post-name-age'>{data.name + ", " + data.age +
+                    <div className='post-name-age emph'>{data.name + ", " + data.age +
                         (data.firstTime ? ", new client." : ", returning client.")}
                     </div>
                 </div> : 
                 <div className='post-for-else'>
-                    <div className='post-name'>{data.name + (data.firstTime ? ", new client." : ", returning client.")}</div>
-                    <div className='post-student-name-age'>{'Student: ' + data.studentName + ', ' + data.age}</div>
+                    <div className='post-name emph'>{data.name + (data.firstTime ? ", new client." : ", returning client.")}</div>
+                    <div className='post-student-name-age emph'>{'Student: ' + data.studentName + ', ' + data.age}</div>
                 </div>}
-                {data.skill !== '' ? <div className='post-skill'>Skill Level:<br/><span>{data.skill}</span></div> : <></>}
-                <div className='post-focus'>Focus:<br/><span>{data.focus}</span></div>
-                {data.firstTime ? <div className='post-availability'>Availability:<br/><span>{data.avail}</span></div> : 
+                {data.skill !== '' ? <div className='post-skill emph'>Skill Level:<br/><span>{data.skill}</span></div> : <></>}
+                <div className='post-focus emph'>Focus:<br/><span>{data.focus}</span></div>
+                {data.firstTime ? <div className='post-availability emph'>Availability:<br/><span>{data.avail}</span></div> : 
                     <div className='post-appointment'>{appointment}</div>
                 }
-                <div className='post-notes'>Notes:<br/><span>{data.notes}</span></div>
+                <div className='post-notes emph'>Notes:<br/><span>{data.notes}</span></div>
             </div>
             <div className='again-button-div'>
                 <div className='again-button' onClick={backToSchedule}>

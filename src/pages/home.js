@@ -7,7 +7,6 @@ import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js';
 
 /* TODO:
-    fix min-height on empty pages
     fix hero text moving on resize after min-height is hit
     footer icons
 */

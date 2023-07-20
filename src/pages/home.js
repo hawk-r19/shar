@@ -12,6 +12,10 @@ import exReviews from '../components/exampleReviews.js';
     footer icons
 */
 
+/* Get real text
+    intro: 225
+    about: 250
+*/
 const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience! More...";
 const scheduleText = "To request a lesson, just click here, fill in your information, select an available time slot, and submit! I'll get back to you as soon as I can to confirm your appointment.";
 const aboutText = "Some extra stuff about me, my experience, history, maybe skill level, etc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Hendrerit gravida rutrum quisque non. More...";

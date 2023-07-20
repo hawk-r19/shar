@@ -10,7 +10,7 @@ import {EMAILJS_KEY} from '../keys/emailjs.js'
 /* TODO:
     add loading screen when email is being sent
     firebase stuff
-    scroll to top when first loaded
+    clean up 'last booked' system
 */
 
 const defaultInfoTemplate = {
@@ -96,7 +96,7 @@ export default function SchedulePage({firebase, mobile}) {
                         </div>
                     </div>
                     <div className='form-div'>
-                        <form>
+                        <form onSubmit={submitForm}>
                             <div className='text-input-div email-div'>Email
                                 <span className='input-wrap email-wrap'>
                                     <span className='input-width email-width' aria-hidden="true">{info.email}</span>
@@ -104,17 +104,18 @@ export default function SchedulePage({firebase, mobile}) {
                                         value={info.email} onChange={handleChange}/>
                                 </span>
                             </div>
-                            <div className='for-me-div'>I'm booking... 
+                            <div className='for-me-div'>
+                                <div className='for-me-label'>I'm booking...</div> 
                                 <div className='radio-container for-me-container'
                                     onClick={e => handleChange({target: {name: 'forMe', value: true}})}>
-                                    For Me
+                                    For me
                                     <input type='radio' id='for-me' name='forMe' readOnly={true}
                                         value={info.forMe} checked={info.forMe}/>
                                     <span className='checkmark'></span>
                                 </div>
                                 <div className='radio-container for-else-container'
                                     onClick={e => handleChange({target: {name: 'forMe', value: false}})}>
-                                    For Someone Else
+                                    For someone else
                                     <input type='radio' id='for-else' name='forMe'  readOnly={true}
                                         value={!info.forMe} checked={!info.forMe}/>
                                     <span className='checkmark'></span>
@@ -142,7 +143,7 @@ export default function SchedulePage({firebase, mobile}) {
                                 <span className='input-wrap age-wrap'>
                                     <span className='input-width age-width' aria-hidden="true">{info.age}</span>
                                     <input type='number' name='age' id='age' value={info.age} required 
-                                        onChange={handleChange}/>
+                                        min='1' max='150' onChange={handleChange}/>
                                 </span>
                             </div>
                             <div className='text-input-div skill-div'>
@@ -213,7 +214,7 @@ export default function SchedulePage({firebase, mobile}) {
                                 </span>
                             </div>
                             <div className='submit-div'>
-                                <button onClick={submitForm} className='submit-button'>Submit</button>
+                                <button type='submit' className='submit-button'>Submit</button>
                             </div>
                         </form>
                     </div>

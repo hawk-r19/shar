@@ -17,7 +17,6 @@ const scheduleText = "To request a lesson, just click here, fill in your informa
 const aboutText = "Some extra stuff about me, my experience, history, maybe skill level, etc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Hendrerit gravida rutrum quisque non. More...";
 
 export default function Home(props) {
-    var short = useMediaQuery({query: '(max-height: 835px)'});
     //getting reviews
     let reviews;
     if('firebase' in props) reviews = [/* retrieve from firebase */]
@@ -50,9 +49,9 @@ export default function Home(props) {
     }
 
     return (
-        <div className={"page home-page" + (props.mobile ? ' mobile' : '') + (short ? ' short' : '')}>
+        <div className={"page home-page" + (props.mobile ? ' mobile' : '')}>
             <div className='hero-div'>
-                <div className={'slash' + (short ? ' short' : '')}></div>
+                <div className='slash'></div>
                 <Hero className='hero-pic'/>
                 <div className='hero-text'>Private Tennis Lessons</div>
             </div>

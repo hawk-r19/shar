@@ -19,24 +19,23 @@ export default function Contact({mobile}) {
 
     /* form contact type
         coachhuq@gmail.com
+        add loading screen
     */
 
     const submitForm = e => {
         e.preventDefault();
-        const updateLastEmail = () => {setLastEmail(...info)};
+        const updateLastEmail = () => {setLastEmail({...info})};
         if(_.isEqual(info, lastEmail)) {alert('An appointment with this exact information was already sent recently.');}
         else {
-            /* emailjs.send('default_service', 'tmplt_contact', tmplt_params, EMAILJS_KEY).then(response => {
+            const tmplt_params = {...info};
+            emailjs.send('default_service', 'tmplt_contact', tmplt_params, EMAILJS_KEY).then(response => {
                 console.log('EMAILJS SUCCESS', response.status, response.text);
                 updateLastEmail();
                 setSubmitted(true);
             }, error => {
                 console.log('EMAILJS FAILED', error);
                 alert('Sending email failed, try clicking submit again.');
-            }); */
-            const tmplt_params = {...info};
-            setLastEmail({...info});
-            setSubmitted(true);
+            });
         }
     }
 

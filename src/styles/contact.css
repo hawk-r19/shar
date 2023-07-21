@@ -4,3 +4,168 @@
     align-items: center;
     font-size: 1.5em;
 }
+
+.contact-form-div, .post-contact-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: max(950px, 50%);
+    box-sizing: border-box;
+    background-color: var(--schedule_bg_color); /* slightly lighter than --blue_light */
+    padding: 1.1em 1.5em;
+    border-radius: 3em;
+}
+
+.contact-header {
+    text-align: center;
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: 400;
+}
+
+.contact-text-input-div.email-div {
+    margin-top: 0;
+}
+
+.contact-text-input-div, .message-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0px;
+    margin: 0;
+}
+
+.contact-text-input-div input, .message-div textarea {
+    background-color: var(--blue_light);
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: .7em;
+    font-family: inherit;
+}
+
+.contact-text-input-div input:focus, .message-div textarea:focus {
+    background-color: var(--blue_light);
+}
+
+/* expandable inputs ---------------------------------------- */
+.input-wrap {
+    display: flex;
+    position: relative;
+    margin-bottom: .7em;
+}
+
+.input-width {
+    position: relative;
+    font-size: .7em;
+    height: 1em;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.input-wrap input {
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+    position: absolute;
+}
+/* expandable inputs end ---------------------------------------- */
+
+.contact-name-div input {
+    min-width: 150px;
+}
+
+.message-div {
+    gap: 5px;
+}
+
+.message-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 4em;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.message-height {
+    position: relative;
+    opacity: 0;
+    min-height: 1em;
+    white-space: pre-line;
+    font-size: .7em;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.message-div textarea {
+    resize: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 80px;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.submit-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    background-color: var(--ball_green);
+    padding: .5em;
+    border-radius: 1em;
+    border: none;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+}
+
+.submit-button:active {
+    background-color: white;
+}
+
+/* post submit styling ---------------------------------- */
+.post-contact-div {
+    width: max(950px, 70%);
+    align-items: center;
+
+    .post-header {
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+}
+
+/* mobile styling --------------------------------------- */
+.contact-page.mobile {
+    .contact-form-div, .post-contact-div {
+        width: 96%;
+        padding: 2vh 3vw;
+        border-radius: 7vw;
+        gap: 5px;
+        font-size: .8em;
+    }
+
+    .input-width {
+        height: .5em;
+        max-width: 86vw;
+    }
+
+    .input-wrap input {
+        max-width: 86vw;
+        height: .8em;
+    }
+
+    .post-contact-div {
+        font-size: .7em;
+    }
+}

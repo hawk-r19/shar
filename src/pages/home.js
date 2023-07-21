@@ -8,7 +8,7 @@ import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js';
 
 /* TODO:
-    footer icons
+    
 */
 
 /* Get real text
@@ -54,14 +54,14 @@ export default function Home(props) {
     }
 
     //hero image cropping
-    var cropHero = useMediaQuery({query: '(max-width: 375px)'});
+    var cropHero = useMediaQuery({query: '(max-width: 500px)'});
 
     return (
         <div className={"page home-page" + (props.mobile ? ' mobile' : '')}>
             <div className='hero-div'>
                 <div className='slash'></div>
                 {cropHero ? 
-                    <Hero className='hero-pic' preserveAspectRatio='xMidYMid slice' width='100vw'/>
+                    <Hero className='hero-pic' preserveAspectRatio='xMidYMid slice' width='80vw'/>
                     : <Hero className='hero-pic'/>}
                 <div className='hero-text'>Private Tennis Lessons</div>
             </div>

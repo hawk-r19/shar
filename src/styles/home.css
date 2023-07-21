@@ -297,10 +297,20 @@
     }
 }
 
+@media screen and (min-width: 800px) {
+    .home-page.mobile {
+        padding-top: 20vh;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .hero-div {
         flex-direction: column;
         padding-top: 4vh;
+    }
+
+    .hero-pic {
+        overflow: visible;
     }
 
     .home-page.mobile .hero-text {

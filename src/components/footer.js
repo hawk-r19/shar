@@ -9,14 +9,6 @@ export default function Footer() {
                 </div>
                 <a className='logo-credit' target='_blank' rel='noreferrer' href="https://www.vecteezy.com/free-vector/tennis-logo">Tennis Logo Vectors by Vecteezy</a>
             </div>
-            <div className='footer-right'>
-                <a className='instagram-link' href='https://www.instagram.com/shar_huq/' target='_blank' rel='noreferrer'>
-                    <img src={require('../imgs/instagram.jpg')} alt='instagram logo'/>
-                </a>
-                <a className='facebook-link' href='https://www.facebook.com/shahriyar.i.huq' target='_blank' rel='noreferrer'>
-                    <img src={require('../imgs/facebook.jpg')} alt='facebook logo'/>
-                </a>
-            </div>
         </div>
     )
 }

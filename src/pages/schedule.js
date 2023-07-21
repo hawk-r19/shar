@@ -12,6 +12,7 @@ import {EMAILJS_KEY} from '../keys/emailjs.js'
     firebase stuff
     clean up 'last booked' system
     get real availability
+    fix payment info
 */
 
 const defaultInfoTemplate = {
@@ -234,8 +235,8 @@ function PaymentInfo({rate}) {
                 <div className='pay-info'>My rate is ${rate} an hour. I typically use venmo,
                     but we can discuss other payment options if needed.</div>
             </div>
-            <a className='venmo-link' href='https://www.framer.com/templates/coming-soon-website/' target='_blank' rel='noreferrer'>
-                <img className='venmo' src={require('../imgs/qr.png')} alt='shar venmo'/>
+            <a className='venmo-link' href='https://account.venmo.com/u/Shar-Huq' target='_blank' rel='noreferrer'>
+                <img className='venmo' src={require('../imgs/venmo.png')} alt='shar venmo'/>
             </a>
         </div>
     )

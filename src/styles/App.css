@@ -24,7 +24,8 @@
     --nav-max-height: max(25vh, 10vw);
     --nav-mobile-height: 15vh;
     --nav-mobile-min-height: 130px;
-    --footer-height: 4vh;
+    --footer-height: 3vw;
+    --footer-min-height: 2em;
 
     font-family: 'Montserrat Alternates';
     -ms-overflow-style: none;
@@ -39,5 +40,5 @@
 
 .page.mobile {
     padding-top: max(var(--nav-mobile-height), var(--nav-mobile-min-height));
-    min-height: calc(100vh - max(var(--nav-mobile-height), var(--nav-mobile-min-height)));
+    min-height: calc(calc(100vh - var(--footer-height)) - max(var(--nav-mobile-height), var(--nav-mobile-min-height)));
 }

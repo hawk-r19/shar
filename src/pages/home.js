@@ -1,38 +1,51 @@
 import React from 'react'
 import '../styles/home.css'
-import {useEffect, useRef} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
-import exReviews from '../components/exampleReviews.js';
+import exReviews from '../components/exampleReviews.js' //backup reviews
+
+//review pics
+import sara from '../imgs/review_imgs/sara_brower.jpg'
 
 /* TODO:
-    
+    better system for loading reviews and review images
+    firebase stuff for texts
 */
 
-/* Get real text
-    intro: 225
-    about: 250
-*/
-const introText = "I'm Shahriyar (you can call me Shar), a tennis coach and high school teacher based in South Austin. I offer professional quality private lessons for teens and adults of any skill level, scheduled at your convenience! More...";
-const scheduleText = "To request a lesson, just click here, fill in your information, select an available time slot, and submit! I'll get back to you as soon as I can to confirm your appointment.";
-const aboutText = "Some extra stuff about me, my experience, history, maybe skill level, etc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Hendrerit gravida rutrum quisque non. More...";
+//get these from firebase
+const introText = "I’m Shar Huq, a math teacher and tennis coach for Crockett HS in south Austin. I offer private/group lessons for all skill levels all around Austin/Cedar Park. I like to stay south/central on weekday evenings and can travel more on weekends!";
+const scheduleText = "To request a lesson, just click here, fill in your information, and submit! I'll get back to you as soon as I can to confirm your appointment.";
+const aboutText = "I’ve been playing for over 15 years. Taken lessons from coaches at SATC. I am an avid fan, researching gear, technique and strategy and implement that with my students. I play at a NTRP 4.0 level for USTA and ATN and have worked with players up to a 4.5 level.";
 
-export default function Home(props) {
+export default function Home({props}) {
+    const {mobile, firestore} = props;
+
+    //getting page text
+    //var text_query = firestore.
+
     //getting reviews
-    let reviews;
-    if('firebase' in props) reviews = [/* retrieve from firebase */]
-    else {
-        reviews = exReviews;
-    }
+    const [realReviews, setRealReviews] = useState([]);
+    useEffect(() => {
+        firestore.collection('reviews').orderBy('order').get().then(snapshot => {
+            var tempReviews = []
+            snapshot.forEach(doc => tempReviews.push(doc.data()));
+            /* getting review imgs - need to load these dynamically */
+            tempReviews[0].img_src = sara;
+            /* getting review imgs done --------------------------- */
+            setRealReviews([...tempReviews]);
+        });
+    }, []);
+
     //return to top arrow visibility
     const arrow = useRef(null);
     const arrowRevealOffset = .8; //(once scrolled down 80vh)
     const arrowOffsetMobile = .6;
     const arrowStatus = () => {
         arrow.current.className.baseVal = (window.scrollY >= window.innerHeight * 
-            (props.mobile ? arrowOffsetMobile : arrowRevealOffset)) ?
+            (mobile ? arrowOffsetMobile : arrowRevealOffset)) ?
             '' : 'arrow-hidden';
     }
     useEffect(() => {
@@ -57,7 +70,7 @@ export default function Home(props) {
     var cropHero = useMediaQuery({query: '(max-width: 500px)'});
 
     return (
-        <div className={"page home-page" + (props.mobile ? ' mobile' : '')}>
+        <div className={"page home-page" + (mobile ? ' mobile' : '')}>
             <div className='hero-div'>
                 <div className='slash'></div>
                 {cropHero ? 
@@ -68,7 +81,7 @@ export default function Home(props) {
             <div className='home-content'>
                 <Arrow id='arrow' className='arrow-hidden' ref={arrow} onClick={scrollToTop}/>
                 <div className='intro-div'>
-                    <div className='pic-container'><img className='intro-pic' src={require('../imgs/shar_portrait_crop.png')} alt='intro pic' /></div>
+                    <div className='pic-container'><img className='intro-pic' src={require('../imgs/shar_portrait_cropped.jpg')} alt='intro pic' /></div>
                     <div className='intro'>
                         <div className='intro-head'>Hello!</div>
                         <div className='intro-text'>{introText}</div>
@@ -87,9 +100,10 @@ export default function Home(props) {
                 </div>
                 <div className='reviews-div'>
                     <div className='reviews-head'>Reviews</div>
-                    {'firebase' in props ? '' : <div className='examples'>*Firebase failed to load, these are example reviews</div>}
+                    {realReviews.length > 0 ? '' : 
+                        <div className='examples'>*Firebase is not loaded, these are example reviews</div>}
                     <div className='reviews'>
-                        {reviews.map((review, index) => { return (
+                        {(realReviews.length > 0 ? realReviews : exReviews).map((review, index) => { return (
                             <div className={`review${'img_src' in review ? ' has-pic' : ''}`} key={`review${index}`}>
                                 {'img_src' in review ? <img className='review-pic' src={review.img_src} alt='reviewer pic'/> : ''}
                                 <div className='review-info'>

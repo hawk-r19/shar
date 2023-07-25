@@ -8,11 +8,19 @@ import Calendar from '../components/calendar.js'
 import {EMAILJS_KEY} from '../keys/emailjs.js'
 
 /* TODO:
-    add loading screen when email is being sent
     firebase stuff
     clean up 'last booked' system
-    get real availability
-    fix payment info
+    fix availability
+    fix form constraints
+    fix payment
+    fix venmo pic width on desktop
+    width stuff
+    add loading screen when email is being sent
+    firebase permissions
+
+    to form:
+    add location field for returning clients
+    configure entire email message from here instead of emailjs, bc template limit
 */
 
 const defaultInfoTemplate = {
@@ -31,7 +39,8 @@ const defaultInfoTemplate = {
         time: '08:00',
 };
 
-export default function SchedulePage({firebase, mobile}) {
+export default function SchedulePage({props}) {
+    const {mobile, firestore, coachEmail} = props;
     const baseAvailability = '9am to 7pm'; //get from firebase | weekdays 6:30, weekends 8am - 8pm
     const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
     const today = '2023-07-15'; //get today from dayjs
@@ -40,6 +49,8 @@ export default function SchedulePage({firebase, mobile}) {
     const [lastBooked, setLastBooked] = useState({});
     const [lastEmail, setLastEmail] = useState({...defaultInfoTemplate, date: today});
     const [info, setInfo] = useState({...defaultInfoTemplate, date: today});
+    //get from firebase
+    const serviceID = 'default_service'; //'service_y36z4zd';
 
     //scroll to top on render
     useEffect(() => {
@@ -58,12 +69,13 @@ export default function SchedulePage({firebase, mobile}) {
             client_email: info.email,
             client_name: info.name,
             for: (info.forMe ? 'Me' : info.studentName),
+            coachEmail: coachEmail
         }
         const updateLastEmail = () => {setLastEmail({...info})};
-        var templateID = (info.firstTime ? 'tmplt_new_client' : 'tmplt_returning');
+        var templateID = (info.firstTime ? 'tmplt_new_client' : 'tmplt_returning'); //maybe get from firebase instead ---------
         if(_.isEqual(info, lastEmail)) {alert('An appointment with this exact information was already sent recently.');}
         else {
-            emailjs.send('default_service', templateID, tmplt_params, EMAILJS_KEY).then(response => {
+            emailjs.send(serviceID, templateID, tmplt_params, EMAILJS_KEY).then(response => {
                 console.log('EMAILJS SUCCESS', response.status, response.text);
                 updateLastEmail();
                 setSubmitted(true);

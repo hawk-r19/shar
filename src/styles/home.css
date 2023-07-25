@@ -174,8 +174,14 @@
     border-radius: 4em;
 }
 
+@media screen and (min-width: 1920px) {
+    .review-pic {
+        width: 25vw;
+    }
+}
+
 .review-info {
-    margin-left: 2vw;
+    margin-left: 1vw;
 }
 
 .review-name {

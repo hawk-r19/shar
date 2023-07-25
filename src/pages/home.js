@@ -7,36 +7,54 @@ import {ReactComponent as Hero} from '../imgs/sharbackaction.svg'
 import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js' //backup reviews
 
-//review pics
-import sara from '../imgs/review_imgs/sara_brower.jpg'
-
 /* TODO:
-    better system for loading reviews and review images
-    firebase stuff for texts
+    firebase permissions
 */
 
-//get these from firebase
-const introText = "I’m Shar Huq, a math teacher and tennis coach for Crockett HS in south Austin. I offer private/group lessons for all skill levels all around Austin/Cedar Park. I like to stay south/central on weekday evenings and can travel more on weekends!";
-const scheduleText = "To request a lesson, just click here, fill in your information, and submit! I'll get back to you as soon as I can to confirm your appointment.";
-const aboutText = "I’ve been playing for over 15 years. Taken lessons from coaches at SATC. I am an avid fan, researching gear, technique and strategy and implement that with my students. I play at a NTRP 4.0 level for USTA and ATN and have worked with players up to a 4.5 level.";
+const introTextDefault = "I’m Shar Huq, a math teacher and tennis coach for Crockett HS in south Austin. I offer private/group lessons for all skill levels all around Austin/Cedar Park. I like to stay south/central on weekday evenings and can travel more on weekends!";
+const scheduleTextDefault = "To request a lesson, just click here, fill in your information, and submit! I'll get back to you as soon as I can to confirm your appointment.";
+const aboutTextDefault = "I’ve been playing for over 15 years. Taken lessons from coaches at SATC. I am an avid fan, researching gear, technique and strategy and implement that with my students. I play at a NTRP 4.0 level for USTA and ATN and have worked with players up to a 4.5 level.";
+
+//importing all review images
+function importAll(r) {
+    let images = {};
+    r.keys().map(item => {images[item.replace('./', '').replace(/\.[^/.]+$/, '')] = r(item);});
+    return images;
+}
+const reviewImgs = importAll(require.context('../imgs/review_imgs/', false, /\.(png|jpe?g|svg)$/));
 
 export default function Home({props}) {
     const {mobile, firestore} = props;
 
     //getting page text
-    //var text_query = firestore.
+    const [introText, setIntroText] = useState(introTextDefault);
+    const [aboutText, setAboutText] = useState(aboutTextDefault);
+    useEffect(() => {
+        firestore.collection('info').doc('introText').get().then(doc => {
+            if(doc.exists) setIntroText(doc.data().text);
+            else {
+                console.log(Error('Could not retrieve introText from firebase'));
+            }
+        }).catch(error => console.log(error));
+        firestore.collection('info').doc('aboutText').get().then(doc => {
+            if(doc.exists) setAboutText(doc.data().text);
+            else {
+                console.log(Error('Could not retrieve aboutText from firebase'));
+            }
+        }).catch(error => console.log(error));
+    }, []);
 
     //getting reviews
     const [realReviews, setRealReviews] = useState([]);
     useEffect(() => {
         firestore.collection('reviews').orderBy('order').get().then(snapshot => {
             var tempReviews = []
-            snapshot.forEach(doc => tempReviews.push(doc.data()));
-            /* getting review imgs - need to load these dynamically */
-            tempReviews[0].img_src = sara;
-            /* getting review imgs done --------------------------- */
+            snapshot.forEach(doc => {
+                if(doc.id in reviewImgs) tempReviews.push({...doc.data(), img_src: reviewImgs[doc.id]});
+                else tempReviews.push(doc.data());
+            });
             setRealReviews([...tempReviews]);
-        });
+        }).catch(error => console.log(error));
     }, []);
 
     //return to top arrow visibility
@@ -89,7 +107,7 @@ export default function Home({props}) {
                 </div>
                 <div className='schedule-div'>
                     <Link onClick={toSchedule} className='schedule-link'>Schedule Now!</Link>
-                    <div className='schedule-text'>{scheduleText}</div>
+                    <div className='schedule-text'>{scheduleTextDefault}</div>
                 </div>
                 <div className='about-div' id='about'>
                     <div className='pic-container'><img className='about-pic' src={require('../imgs/shar_students_posed.jpg')} alt='pic with student' /></div>

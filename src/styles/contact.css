@@ -50,25 +50,27 @@
 }
 
 /* expandable inputs ---------------------------------------- */
-.input-wrap {
-    display: flex;
-    position: relative;
-    margin-bottom: .7em;
-}
-
-.input-width {
-    position: relative;
-    font-size: .7em;
-    height: 1em;
-    opacity: 0;
-    overflow: hidden;
-}
-
-.input-wrap input {
-    width: 100%;
-    min-width: 200px;
-    max-width: 400px;
-    position: absolute;
+.contact-page {
+    .input-wrap {
+        display: flex;
+        position: relative;
+        margin-bottom: .7em;
+    }
+    
+    .input-width {
+        position: relative;
+        font-size: .7em;
+        height: 1em;
+        opacity: 0;
+        overflow: hidden;
+    }
+    
+    .input-wrap input {
+        width: 100%;
+        min-width: 200px;
+        max-width: 400px;
+        position: absolute;
+    }
 }
 /* expandable inputs end ---------------------------------------- */
 

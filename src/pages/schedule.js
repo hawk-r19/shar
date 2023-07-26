@@ -8,19 +8,12 @@ import Calendar from '../components/calendar.js'
 import {EMAILJS_KEY} from '../keys/emailjs.js'
 
 /* TODO:
-    firebase stuff
-    clean up 'last booked' system
-    fix availability
-    fix form constraints
-    fix payment
-    fix venmo pic width on desktop
-    width stuff
-    add loading screen when email is being sent
-    firebase permissions
+    add loading screen and/or animation when email is being sent
+        (for now button just gets temporarily disabled)
+    avail events from firebase
 
     to form:
     add location field for returning clients
-    configure entire email message from here instead of emailjs, bc template limit
 */
 
 const defaultInfoTemplate = {
@@ -35,22 +28,20 @@ const defaultInfoTemplate = {
         avail: '',
         notes: '',
         date: '',
-        length: '',
+        length: '60',
         time: '08:00',
 };
 
-export default function SchedulePage({props}) {
-    const {mobile, firestore, coachEmail} = props;
-    const baseAvailability = '9am to 7pm'; //get from firebase | weekdays 6:30, weekends 8am - 8pm
-    const availabilityEvents = ['Out of town from 7/10 - 7/15']; //get from firebase
-    const today = '2023-07-15'; //get today from dayjs
-    const rate = '35'; //get from firebase | 45 for privates, 30 for duos, 20 for 3+ (all per person)
+export default function SchedulePage({props, templateID}) {
+    const {mobile, firestore, coachEmail, serviceID} = props;
+    const baseAvailability = "I am available for lessons starting on weekdays 6:30pm - 8pm and weekends 8am - 8pm, flexibly";
+    const availabilityEvents = []; //get from firebase
+    const today = '2023-07-26'; //get today from dayjs
+    const [weekday, setWeekday] = useState(false); //to set constraints for time selector
+    const payRate = "I charge $40/hr for privates, $60/hr for duos, and $20/hr per person for 3+ people.";
     const [submitted, setSubmitted] = useState(false);
-    const [lastBooked, setLastBooked] = useState({});
     const [lastEmail, setLastEmail] = useState({...defaultInfoTemplate, date: today});
     const [info, setInfo] = useState({...defaultInfoTemplate, date: today});
-    //get from firebase
-    const serviceID = 'default_service'; //'service_y36z4zd';
 
     //scroll to top on render
     useEffect(() => {
@@ -60,28 +51,50 @@ export default function SchedulePage({props}) {
         });
     }, []);
 
+    const getDateTimeLength = (emailInfo) => {
+        let date = emailInfo.date.slice(-5).replace('-', '/');
+        if(date[0] === '0') date = date.slice(1);
+        let hour = parseInt(emailInfo.time.slice(0,2));
+        let time = '' + (hour > 12 ? hour - 12 : hour) + 
+            (emailInfo.time.slice(3) === '00' ? '' : emailInfo.time.slice(2)) + 
+            (hour > 11 ? 'pm' : 'am');
+        return `Requesting lesson on ${date} at ${time} for ${emailInfo.length} minutes.`;
+    }
+
+    const makeInfoText = (emailInfo) => {
+        return `${(emailInfo.firstTime ? 'New client' : 'Returning client')}<br>` +
+                `Scheduling for ${(emailInfo.forMe ? 'me' : emailInfo.studentName)}, age ${emailInfo.age}<br>` +
+                `Skill level: ${emailInfo.skill}<br>` +
+                `Lesson focus: ${emailInfo.focus}<br>` +
+                (emailInfo.firstTime ? 'Availability: ' + emailInfo.avail : getDateTimeLength(emailInfo)) + '<br>' +
+                `Notes: ${(emailInfo.notes === '' ? 'none' : emailInfo.notes)}`;
+    }
+
+    const [sending, setSending] = useState(false);
     const submitForm = e => {
         e.preventDefault();
+        setSending(true);
         //add submit to firebase
-        setLastBooked({...info});
-        var tmplt_params = {
-            ...info,
+        const tmplt_params = {
             client_email: info.email,
             client_name: info.name,
-            for: (info.forMe ? 'Me' : info.studentName),
-            coachEmail: coachEmail
+            coach_email: coachEmail,
+            info_text: makeInfoText({...info})
         }
         const updateLastEmail = () => {setLastEmail({...info})};
-        var templateID = (info.firstTime ? 'tmplt_new_client' : 'tmplt_returning'); //maybe get from firebase instead ---------
-        if(_.isEqual(info, lastEmail)) {alert('An appointment with this exact information was already sent recently.');}
-        else {
+        if(_.isEqual(info, lastEmail)) {
+            alert('An appointment with this exact information was already sent recently.');
+            setSending(false);
+        } else {
             emailjs.send(serviceID, templateID, tmplt_params, EMAILJS_KEY).then(response => {
                 console.log('EMAILJS SUCCESS', response.status, response.text);
                 updateLastEmail();
                 setSubmitted(true);
+                setSending(false);
             }, error => {
                 console.log('EMAILJS FAILED', error);
                 alert('Sending email failed, try clicking submit again.');
+                setSending(false);
             });
         }
     }
@@ -100,8 +113,8 @@ export default function SchedulePage({props}) {
                     <div className='initial-info-div'>
                         <div className='initial-info-header'>Availability:</div>
                         <div className='initial-info'>
-                            <div className='base-avail'>I am currently available for 60-90 minute sessions any day starting from 
-                                {' ' + baseAvailability + (availabilityEvents.length === 0 ? '.' : ', with the following exceptions')}.</div>
+                            <div className='base-avail'>
+                                {baseAvailability + (availabilityEvents.length === 0 ? '' : ', with the following exceptions')}.</div>
                             <ul className='avail-events'>
                                 {availabilityEvents.map((event, index) => 
                                     <li className='event' key={index}>{event}</li>)}
@@ -147,7 +160,7 @@ export default function SchedulePage({props}) {
                                     <div className='text-input-div student-name-div'>Student's Name
                                         <span className='input-wrap student-name-wrap'>
                                             <span className='input-width student-name-width' aria-hidden="true">{info.studentName}</span>
-                                            <input type='text' name='studentName' id='student-name' 
+                                            <input type='text' name='studentName' id='student-name' autoComplete='on' 
                                                 value={info.studentName} required onChange={handleChange}/>
                                         </span>
                                     </div>
@@ -168,14 +181,14 @@ export default function SchedulePage({props}) {
                                 <span className='input-wrap skill-wrap'>
                                     <span className='input-width skill-width' aria-hidden="true">{info.skill}</span>
                                     <input type='text' name='skill' id='skill' value={info.skill} required
-                                        onChange={handleChange}/>
+                                        autoComplete='on' onChange={handleChange}/>
                                 </span>
                             </div>
                             <div className='text-input-div focus-div'>What would you like to work on in this session?
                                 <span className='input-wrap focus-wrap'>
                                     <span className='input-width focus-width' aria-hidden="true">{info.focus}</span>
                                     <input type='text' name='focus' id='focus' value={info.focus} required
-                                        onChange={handleChange}/>
+                                        autoComplete='on' onChange={handleChange}/>
                                 </span>
                             </div>
                             <div className='first-time-div'
@@ -199,7 +212,7 @@ export default function SchedulePage({props}) {
                             }
                             {info.firstTime ? <></> : 
                                 <div className='schedule-time-div'>
-                                    <Calendar />
+                                    {/* <Calendar /> */}
                                     <div className='schedule-time-inputs'>
                                         <div className='text-input-div date-div'>Date
                                             <input type='date' name='date' id='date' value={info.date}
@@ -214,8 +227,7 @@ export default function SchedulePage({props}) {
                                         </div>
                                         <div className='text-input-div time-div'>Time
                                             <input type='time' name='time' id='time' value={info.time} 
-                                                min='09:00' max='19:00' onChange={handleChange} required/>
-                                            {/* add limits based on availability */}
+                                                min={(weekday ? '18:30' : '08:00')} max='21:00' onChange={handleChange} required/>
                                         </div>
                                     </div>
                                 </div>
@@ -228,24 +240,23 @@ export default function SchedulePage({props}) {
                                 </span>
                             </div>
                             <div className='submit-div'>
-                                <button type='submit' className='submit-button'>Submit</button>
+                                <button type='submit' className='submit-button' disabled={sending}>Submit</button>
                             </div>
                         </form>
                     </div>
-                    <PaymentInfo rate={rate}/>
+                    <PaymentInfo payRate={payRate}/>
                 </div>
             }
         </div>
     )
 }
 
-function PaymentInfo({rate}) {
+function PaymentInfo({payRate}) {
     return (
         <div className='pay-div'>
             <div className='pay-left'>
                 <div className='pay-header'>Payment Info</div>
-                <div className='pay-info'>My rate is ${rate} an hour. I typically use venmo,
-                    but we can discuss other payment options if needed.</div>
+                <div className='pay-info'>{payRate} I typically use venmo, but we can discuss other payment options as needed.</div>
             </div>
             <a className='venmo-link' href='https://account.venmo.com/u/Shar-Huq' target='_blank' rel='noreferrer'>
                 <img className='venmo' src={require('../imgs/venmo.png')} alt='shar venmo'/>

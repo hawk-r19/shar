@@ -4,7 +4,8 @@ import emailjs from '@emailjs/browser'
 import {EMAILJS_KEY} from '../keys/emailjs.js'
 import _ from 'lodash'
 
-export default function Contact({mobile}) {
+export default function Contact({props, templateID}) {
+    const {mobile, coachEmail, serviceID} = props;
     const [info, setInfo] = useState({
         client_name: '',
         client_email: '',
@@ -16,25 +17,30 @@ export default function Contact({mobile}) {
         message: ''
     });
     const [submitted, setSubmitted] = useState(false);
+    const [sending, setSending] = useState(false);
 
-    /* form contact type
-        coachhuq@gmail.com
-        add loading screen
+    /* TODO:
+        
     */
 
     const submitForm = e => {
         e.preventDefault();
         const updateLastEmail = () => {setLastEmail({...info})};
-        if(_.isEqual(info, lastEmail)) {alert('An appointment with this exact information was already sent recently.');}
-        else {
-            const tmplt_params = {...info};
-            emailjs.send('default_service', 'tmplt_contact', tmplt_params, EMAILJS_KEY).then(response => {
+        setSending(true);
+        if(_.isEqual(info, lastEmail)) {
+            alert('An appointment with this exact information was already sent recently.');
+            setSending(false);
+        } else {
+            const tmplt_params = {...info, coach_email: coachEmail};
+            emailjs.send(serviceID, templateID, tmplt_params, EMAILJS_KEY).then(response => {
                 console.log('EMAILJS SUCCESS', response.status, response.text);
                 updateLastEmail();
                 setSubmitted(true);
+                setSending(false);
             }, error => {
                 console.log('EMAILJS FAILED', error);
                 alert('Sending email failed, try clicking submit again.');
+                setSending(false);
             });
         }
     }
@@ -86,11 +92,12 @@ export default function Contact({mobile}) {
                         <span className='message-wrap'>
                             <p className='message-height' aria-hidden='true'>
                                 {(info.message === '') ? 'a' : info.message}</p>
-                            <textarea name='message' id='message' value={info.message} onChange={handleChange}/>
+                            <textarea name='message' id='message' value={info.message} 
+                                onChange={handleChange} required/>
                         </span>
                     </div>
                     <div className='submit-div'>
-                        <button type='submit' className='submit-button'>Submit</button>
+                        <button type='submit' className='submit-button' disabled={sending}>Submit</button>
                     </div>
                 </form>
             }

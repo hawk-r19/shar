@@ -44,7 +44,7 @@
 }
 
 #arrow {
-    height: 6vw;
+    height: max(5vw, 3em);
     margin: 2vw;
     float: right;
     position: fixed;
@@ -282,6 +282,10 @@
     .reviews {
         gap: 2vh;
         margin-bottom: 0;
+    }
+
+    .reviews-head {
+        text-align: center;
     }
 
     .review {

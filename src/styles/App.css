@@ -1,7 +1,4 @@
 .app {
-    /* --blue_light: #f8fff6;
-    --green_transparent: #3bff0526; */
-
     /* tennis colors */
     --court_blue: #3B8ADF;
     --ball_green: #CCFF00;
@@ -25,7 +22,7 @@
     --nav-mobile-height: 15vh;
     --nav-mobile-min-height: 130px;
     --footer-height: 3vw;
-    --footer-min-height: 2em;
+    --footer-min-height: 65px;
 
     font-family: 'Montserrat Alternates';
     -ms-overflow-style: none;
@@ -34,11 +31,11 @@
 
 .page {
     padding-top: min(var(--nav-height), var(--nav-max-height));
-    min-height: calc(calc(100vh - var(--footer-height)) - min(var(--nav-height), var(--nav-max-height)));
+    box-sizing: border-box;
+    min-height: calc(100vh - max(var(--footer-height), var(--footer-min-height)));
     background-color: var(--primary_bg_color);
 }
 
 .page.mobile {
     padding-top: max(var(--nav-mobile-height), var(--nav-mobile-min-height));
-    min-height: calc(calc(100vh - var(--footer-height)) - max(var(--nav-mobile-height), var(--nav-mobile-min-height)));
 }

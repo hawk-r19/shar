@@ -1,4 +1,5 @@
 .footer {
+    box-sizing: border-box;
     height: max(var(--footer-min-height), var(--footer-height));
     padding: .5em 1em;
     background-color: var(--second_bg_color);
@@ -14,17 +15,3 @@
 .footer-left a {
     color: black;
 }
-
-/* .footer-right {
-    display: flex;
-    gap: 10px;
-}
-
-.footer-right img {
-    width: calc(3vw + 3vh);
-    max-width: 60px;
-}
-
-.footer-right img:hover {
-    cursor: pointer;
-} */

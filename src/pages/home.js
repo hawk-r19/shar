@@ -8,7 +8,7 @@ import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js' //backup reviews
 
 /* TODO:
-    firebase permissions
+    
 */
 
 const introTextDefault = "I’m Shar Huq, a math teacher and tennis coach for Crockett HS in south Austin. I offer private/group lessons for all skill levels all around Austin/Cedar Park. I like to stay south/central on weekday evenings and can travel more on weekends!";
@@ -35,13 +35,13 @@ export default function Home({props}) {
             else {
                 console.log(Error('Could not retrieve introText from firebase'));
             }
-        }).catch(error => console.log(error));
+        }).catch(error => console.log(Error('Could not retrieve introText from firebase', {cause: error})));
         firestore.collection('info').doc('aboutText').get().then(doc => {
             if(doc.exists) setAboutText(doc.data().text);
             else {
                 console.log(Error('Could not retrieve aboutText from firebase'));
             }
-        }).catch(error => console.log(error));
+        }).catch(error => console.log(Error('Could not retrieve aboutText from firebase', {cause: error})));
     }, []);
 
     //getting reviews

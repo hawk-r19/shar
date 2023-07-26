@@ -1,11 +1,10 @@
 import '../styles/contact.css'
 import {useState} from 'react'
 import emailjs from '@emailjs/browser'
-import {EMAILJS_KEY} from '../keys/emailjs.js'
 import _ from 'lodash'
 
-export default function Contact({props, templateID}) {
-    const {mobile, coachEmail, serviceID} = props;
+export default function Contact({props, emailjsInfo}) {
+    const {key, coachEmail, serviceID, contactTmpltID} = emailjsInfo;
     const [info, setInfo] = useState({
         client_name: '',
         client_email: '',
@@ -32,7 +31,7 @@ export default function Contact({props, templateID}) {
             setSending(false);
         } else {
             const tmplt_params = {...info, coach_email: coachEmail};
-            emailjs.send(serviceID, templateID, tmplt_params, EMAILJS_KEY).then(response => {
+            emailjs.send(serviceID, contactTmpltID, tmplt_params, key).then(response => {
                 console.log('EMAILJS SUCCESS', response.status, response.text);
                 updateLastEmail();
                 setSubmitted(true);
@@ -62,7 +61,7 @@ export default function Contact({props, templateID}) {
     }
 
     return (
-        <div className={'page contact-page' + (mobile ? ' mobile' : '')}>
+        <div className={'page contact-page' + (props.mobile ? ' mobile' : '')}>
             {submitted ? 
                 <div className='post-contact-div'>
                     <div className='post-header'>Message Sent</div>

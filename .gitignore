@@ -25,3 +25,4 @@ yarn-error.log*
 #custom
 /src/imgs/extra
 /src/keys/*
+.env

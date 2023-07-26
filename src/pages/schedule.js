@@ -5,7 +5,6 @@ import {useState, useEffect} from 'react'
 import emailjs from '@emailjs/browser'
 import _ from 'lodash'
 import Calendar from '../components/calendar.js'
-import {EMAILJS_KEY} from '../keys/emailjs.js'
 
 /* TODO:
     add loading screen and/or animation when email is being sent
@@ -32,8 +31,9 @@ const defaultInfoTemplate = {
         time: '08:00',
 };
 
-export default function SchedulePage({props, templateID}) {
-    const {mobile, firestore, coachEmail, serviceID} = props;
+export default function SchedulePage({props, emailjsInfo}) {
+    const {mobile, firestore} = props;
+    const {key, coachEmail, serviceID, newApptTmpltID} = emailjsInfo;
     const baseAvailability = "I am available for lessons starting on weekdays 6:30pm - 8pm and weekends 8am - 8pm, flexibly";
     const availabilityEvents = []; //get from firebase
     const today = '2023-07-26'; //get today from dayjs
@@ -86,7 +86,7 @@ export default function SchedulePage({props, templateID}) {
             alert('An appointment with this exact information was already sent recently.');
             setSending(false);
         } else {
-            emailjs.send(serviceID, templateID, tmplt_params, EMAILJS_KEY).then(response => {
+            emailjs.send(serviceID, newApptTmpltID, tmplt_params, key).then(response => {
                 console.log('EMAILJS SUCCESS', response.status, response.text);
                 updateLastEmail();
                 setSubmitted(true);

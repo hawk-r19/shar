@@ -1,4 +1,5 @@
 import './styles/App.css'
+import {useState, useEffect} from 'react'
 import {HashRouter, Routes, Route} from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Home from './pages/home.js'
@@ -8,28 +9,50 @@ import Tips from './pages/tips.js'
 import Contact from './pages/contact.js'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
-import {firebaseConfig} from './keys/firebase.js'
 
 /* TODO:
     fix nav to not use a whole new route
 */
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp({
+    apiKey: `${process.env.REACT_APP_FIREBASE_KEY}`,
+    authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
+    projectId: `${process.env.REACT_APP_PROJECT_ID}`,
+    storageBucket: `${process.env.REACT_APP_STORAGE_BUCKET}`,
+    messagingSenderId: `${process.env.REACT_APP_MESS_SENDER_ID}`,
+    appId: `${process.env.REACT_APP_APP_ID}`
+});
 const firestore = firebase.firestore();
 const TESTING_EMAIL = false;
 
 export default function App() {
     var mobile = useMediaQuery({query: '(max-width: 1000px)'});
-    const coachEmail = 'coachhuq@gmail.com'; //maybe get coach email from firebase too
     var props = {
         mobile: mobile,
-        coachEmail: (TESTING_EMAIL ? 'rhawk1509@gmail.com' : coachEmail),
-        firestore: firestore,
-        serviceID: (TESTING_EMAIL ? 'default_service' : 'service_y36z4zd')
+        firestore: firestore
     };
-    //get these IDs from firebase
-    var newApptTemplateID = 'tmplt_new_appt'; 
-    var contactTemplateID = 'tmplt_contact';
+    const [emailjsInfo, setEmailjsInfo] = useState({
+        key: '',
+        coachEmail: '',
+        serviceID: '',
+        newApptTemplateID: '',
+        contactTemplateID: ''
+    });
+    //fetching emailjs information
+    useEffect(() => {
+        firestore.collection('keys').doc('emailjs').get().then(doc => {
+            if(doc.exists) {
+                let data = {...doc.data()};
+                setEmailjsInfo({
+                    key: data.key,
+                    coachEmail: (TESTING_EMAIL ? data.testingEmail : data.coachEmail),
+                    serviceID: (TESTING_EMAIL ? data.testingServiceID : data.serviceID),
+                    newApptTmpltID: data.newApptTmpltID,
+                    contactTmpltID: data.contactTmpltID
+                });
+            } else console.log(Error('emailjs doc does not exist'));
+        }).catch(error => console.log(Error('Could not retrieve emailjs doc from firebase', {cause: error})));
+    }, []);
 
     return (
         <div className='app' id='app'>
@@ -38,9 +61,9 @@ export default function App() {
                     <Route path='/' element={<Layout mobile={mobile}/>}>
                         <Route index element={<Home props={props}/>} />
                         <Route path='about' element={<Home props={props}/>} />
-                        <Route path='schedule' element={<SchedulePage props={props} templateID={newApptTemplateID}/>} />
+                        <Route path='schedule' element={<SchedulePage props={props} emailjsInfo={emailjsInfo}/>} />
                         <Route path='tips' element={<Tips props={props}/>} />
-                        <Route path='contact' element={<Contact props={props} templateID={contactTemplateID}/>} />
+                        <Route path='contact' element={<Contact props={props} emailjsInfo={emailjsInfo}/>} />
                     </Route>
                 </Routes>
             </HashRouter>

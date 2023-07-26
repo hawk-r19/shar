@@ -32,15 +32,12 @@ export default function Home({props}) {
     useEffect(() => {
         firestore.collection('info').doc('introText').get().then(doc => {
             if(doc.exists) setIntroText(doc.data().text);
-            else {
-                console.log(Error('Could not retrieve introText from firebase'));
-            }
+            else console.log(Error('Could not retrieve introText from firebase'));
         }).catch(error => console.log(Error('Could not retrieve introText from firebase', {cause: error})));
+        
         firestore.collection('info').doc('aboutText').get().then(doc => {
             if(doc.exists) setAboutText(doc.data().text);
-            else {
-                console.log(Error('Could not retrieve aboutText from firebase'));
-            }
+            else console.log(Error('Could not retrieve aboutText from firebase'));
         }).catch(error => console.log(Error('Could not retrieve aboutText from firebase', {cause: error})));
     }, []);
 

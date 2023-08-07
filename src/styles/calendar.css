@@ -1,0 +1,33 @@
+.calendar {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 2em;
+    padding-top: 1vw;
+    margin: 1vw 0;
+
+    .calendar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2vw;
+        padding-bottom: 1vh;
+        border-bottom: 2px solid black;
+    }
+
+    .calendar-days {
+        padding: 0 2vw;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .calendar-days .day:nth-child(-n+6) {
+        border-right: 2px solid black;
+    }
+
+    .day {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}

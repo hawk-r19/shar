@@ -63,7 +63,7 @@ export default function SchedulePage({props, emailjsInfo}) {
         let date = dayjs(info.date + ' ' + info.time);
         let day = date.day();
         let isWeekday = (day > 0 && day < 6);
-        if(weekday != isWeekday) setWeekday(isWeekday);
+        if(weekday !== isWeekday) setWeekday(isWeekday);
     }, [info.date]);
 
     //formatting date info to string for email
@@ -86,6 +86,7 @@ export default function SchedulePage({props, emailjsInfo}) {
                 `Notes: ${(emailInfo.notes === '' ? 'none' : emailInfo.notes)}`;
     }
 
+    //sending email on submit
     const [sending, setSending] = useState(false);
     const submitForm = e => {
         e.preventDefault();
@@ -120,6 +121,11 @@ export default function SchedulePage({props, emailjsInfo}) {
             ...info,
             [e.target.name]: e.target.value,
         });
+    }
+
+    //receiving data on click on calendar
+    const clickDate = (date) => {
+        console.log(date);
     }
 
     return (
@@ -228,7 +234,7 @@ export default function SchedulePage({props, emailjsInfo}) {
                             }
                             {info.firstTime ? <></> : 
                                 <div className='schedule-time-div'>
-                                    {mobile ? <></> : <Calendar />}
+                                    {mobile ? <></> : <div className='schedule-calendar'><Calendar clickDate={clickDate} mobile={mobile}/></div>}
                                     <div className='schedule-time-inputs'>
                                         <div className='text-input-div date-div'>Date
                                             <input type='date' name='date' id='date' value={info.date}

@@ -6,8 +6,8 @@ import {ReactComponent as Logo} from '../imgs/huq_logo.svg'
 import Icon from '@mdi/react'
 import {mdiMenu} from '@mdi/js'
 
-/* TODO:
-    remove link for about, maybe use state, don't need useLocation/path, maybe use useNavigate
+/* 
+TODO remove link for about, maybe use state, don't need useLocation/path, maybe use useNavigate
 */
 
 export default function Nav({mobile}) {

@@ -10,8 +10,9 @@ import Contact from './pages/contact.js'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
 
-/* TODO:
-    fix nav to not use a whole new route
+/* 
+TODO fix nav to not use a whole new route
+TODO make admin page
 */
 
 firebase.initializeApp({

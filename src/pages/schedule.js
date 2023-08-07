@@ -1,18 +1,16 @@
 import '../styles/schedule.css'
-import dayjs from 'dayjs'
+import * as dayjs from 'dayjs'
 import React from 'react'
 import {useState, useEffect} from 'react'
 import emailjs from '@emailjs/browser'
 import _ from 'lodash'
 import Calendar from '../components/calendar.js'
 
-/* TODO:
-    add loading screen and/or animation when email is being sent
-        (for now button just gets temporarily disabled)
-    avail events from firebase
-
-    to form:
-    add location field for returning clients
+/*
+TODO add calendar component
+TODO add loading screen and/or animation when email is being sent
+    (for now button just gets temporarily disabled)
+TODO avail events and pay rate from firebase
 */
 
 const defaultInfoTemplate = {
@@ -36,9 +34,9 @@ export default function SchedulePage({props, emailjsInfo}) {
     const {key, coachEmail, serviceID, newApptTmpltID} = emailjsInfo;
     const baseAvailability = "I am available for lessons starting on weekdays 6:30pm - 8pm and weekends 8am - 8pm, flexibly";
     const availabilityEvents = []; //get from firebase
-    const today = '2023-07-26'; //get today from dayjs
+    const [today, setToday] = useState('2023-08-07');
     const [weekday, setWeekday] = useState(false); //to set constraints for time selector
-    const payRate = "I charge $40/hr for privates, $60/hr for duos, and $20/hr per person for 3+ people.";
+    const payRate = "I charge $40/hr for privates, $60/hr for duos, and $20/hr per person for 3+ people."; //get from firebase
     const [submitted, setSubmitted] = useState(false);
     const [lastEmail, setLastEmail] = useState({...defaultInfoTemplate, date: today});
     const [info, setInfo] = useState({...defaultInfoTemplate, date: today});
@@ -51,6 +49,24 @@ export default function SchedulePage({props, emailjsInfo}) {
         });
     }, []);
 
+    //getting today's date
+    useEffect(() => {
+        let date = dayjs();
+        let month = date.month() + 1;
+        let day = date.date();
+        let dateText = '' + date.year() + '-' + (month < 10 ? '0' + month : month) + '-' + 
+            (day < 10 ? '0' + day : day);
+        setToday(dateText);
+    }, []);
+    //setting weekday based on current day selected
+    useEffect(() => {
+        let date = dayjs(info.date + ' ' + info.time);
+        let day = date.day();
+        let isWeekday = (day > 0 && day < 6);
+        if(weekday != isWeekday) setWeekday(isWeekday);
+    }, [info.date]);
+
+    //formatting date info to string for email
     const getDateTimeLength = (emailInfo) => {
         let date = emailInfo.date.slice(-5).replace('-', '/');
         if(date[0] === '0') date = date.slice(1);
@@ -60,7 +76,7 @@ export default function SchedulePage({props, emailjsInfo}) {
             (hour > 11 ? 'pm' : 'am');
         return `Requesting lesson on ${date} at ${time} for ${emailInfo.length} minutes.`;
     }
-
+    //formatting info to string for email
     const makeInfoText = (emailInfo) => {
         return `${(emailInfo.firstTime ? 'New client' : 'Returning client')}<br>` +
                 `Scheduling for ${(emailInfo.forMe ? 'me' : emailInfo.studentName)}, age ${emailInfo.age}<br>` +
@@ -212,7 +228,7 @@ export default function SchedulePage({props, emailjsInfo}) {
                             }
                             {info.firstTime ? <></> : 
                                 <div className='schedule-time-div'>
-                                    {/* <Calendar /> */}
+                                    {mobile ? <></> : <Calendar />}
                                     <div className='schedule-time-inputs'>
                                         <div className='text-input-div date-div'>Date
                                             <input type='date' name='date' id='date' value={info.date}
@@ -225,10 +241,15 @@ export default function SchedulePage({props, emailjsInfo}) {
                                                 <option value='90'>90 Minutes</option>
                                             </select>
                                         </div>
+                                        {weekday ? 
                                         <div className='text-input-div time-div'>Time
                                             <input type='time' name='time' id='time' value={info.time} 
-                                                min={(weekday ? '18:30' : '08:00')} max='21:00' onChange={handleChange} required/>
-                                        </div>
+                                                min='18:30' max='21:00' onChange={handleChange} required/>
+                                        </div> : 
+                                        <div className='text-input-div time-div'>Time
+                                            <input type='time' name='time' id='time' value={info.time} 
+                                                min='08:00' max='21:00' onChange={handleChange} required/>
+                                        </div>}
                                     </div>
                                 </div>
                             }

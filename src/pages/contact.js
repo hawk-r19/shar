@@ -18,7 +18,7 @@ export default function Contact({props, emailjsInfo}) {
     const [submitted, setSubmitted] = useState(false);
     const [sending, setSending] = useState(false);
 
-    /* TODO:
+    /*
         
     */
 

@@ -64,6 +64,12 @@ function DayView({date, clickDate}) {
     }
 
     return (
-        <div className='day' onClick={click}>{DAYSOFWEEK[date.day()] + ' ' + date.date()}</div>
+        <div className='day' onClick={click}>
+            <div className='day-header'>{DAYSOFWEEK[date.day()] + ' ' + date.date()}</div>
+            <div className='time-block 8'>8am</div>
+            <div className='time-block 12'>12pm</div>
+            <div className='time-block 16'>4pm</div>
+            <div className='time-block 20'>8pm</div>
+        </div>
     )
 }

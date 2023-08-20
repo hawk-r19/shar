@@ -7,7 +7,7 @@ import _ from 'lodash'
 import Calendar from '../components/calendar.js'
 
 /*
-TODO add calendar component
+TODO finish calendar component
 TODO add loading screen and/or animation when email is being sent
     (for now button just gets temporarily disabled)
 TODO avail events and pay rate from firebase
@@ -234,7 +234,7 @@ export default function SchedulePage({props, emailjsInfo}) {
                             }
                             {info.firstTime ? <></> : 
                                 <div className='schedule-time-div'>
-                                    {mobile ? <></> : <div className='schedule-calendar'><Calendar clickDate={clickDate} mobile={mobile}/></div>}
+                                    {/* {mobile ? <></> : <div className='schedule-calendar'><Calendar clickDate={clickDate} mobile={mobile}/></div>} */}
                                     <div className='schedule-time-inputs'>
                                         <div className='text-input-div date-div'>Date
                                             <input type='date' name='date' id='date' value={info.date}

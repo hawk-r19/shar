@@ -8,12 +8,12 @@ import {ReactComponent as Arrow} from '../imgs/arrow_up_right.svg'
 import exReviews from '../components/exampleReviews.js' //backup reviews
 
 /*
-TODO fix about text with shar's text message
+TODO add anouncements banner and page
 */
 
 const introTextDefault = "I’m Shar Huq, a math teacher and tennis coach for Crockett HS in south Austin. I offer private/group lessons for all skill levels all around Austin/Cedar Park. I like to stay south/central on weekday evenings and can travel more on weekends!";
 const scheduleTextDefault = "To request a lesson, just click here, fill in your information, and submit! I'll get back to you as soon as I can to confirm your appointment.";
-const aboutTextDefault = "I’ve been playing for over 15 years. Taken lessons from coaches at SATC. I am an avid fan, researching gear, technique and strategy and implement that with my students. I play at a NTRP 4.0 level for USTA and ATN and have worked with players up to a 4.5 level.";
+const aboutTextDefault = "I’ve been playing for over 15 years. Taken lessons from coaches at SATC. I am an avid fan, researching gear, technique and strategy and implement that with my students. I played for Bowie High and club at UT Austin. I play at a NTRP 4.0 level for USTA and ATN and have worked with players up to a 4.5 level.";
 
 //importing all review images
 function importAll(r) {

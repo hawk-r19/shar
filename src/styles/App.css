@@ -14,7 +14,7 @@
     --hero_img_color: black;
     --hero_text_color: black;
     --schedule_btn_alt_color: var(--blue_light);
-    --schedule_bg_color: #5a9ade;
+    --schedule_bg_color: #5a9ade;  /* slightly lighter than --blue_light */
     --checkbox_bg_color: #31a3ff;
 
     --nav-height: max(200px, calc(6vh + 9vw));

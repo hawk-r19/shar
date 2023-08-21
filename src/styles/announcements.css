@@ -1,0 +1,44 @@
+.ann-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5em;
+    padding-bottom: 10px;
+
+    .ann-header {
+        font-size: 2em;
+    }
+
+    .ann-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: max(950px, 50%);
+        box-sizing: border-box;
+        background-color: var(--schedule_bg_color);
+        padding: 1.1em 1.5em;
+        border-radius: 3em;
+    }
+
+    .announcement img {
+        width: 80%;
+    }
+}
+
+.ann-page.mobile {
+    .ann-header {
+        font-size: 4vh;
+    }
+
+    .ann-content {
+        width: 96%;
+        padding: 2vh 3vw;
+        border-radius: 7vw;
+        gap: 0;
+        font-size: 2vh;
+    }
+
+    .announcement img {
+        width: 90%;
+    }
+}

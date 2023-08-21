@@ -193,6 +193,24 @@
     font-size: 1.5vw;
 }
 
+.ann-banner {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1vh;
+    padding: 1vh;
+    border-radius: 2vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: max(3vw, 3vh);
+    background-color: var(--second_bg_color);
+    position: relative;
+    z-index: 2;
+}
+
 /* mobile styling ------------------------------------------------- */
 
 .home-page.mobile {

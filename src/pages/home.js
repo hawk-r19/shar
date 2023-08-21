@@ -26,6 +26,9 @@ const reviewImgs = importAll(require.context('../imgs/review_imgs/', false, /\.(
 export default function Home({props}) {
     const {mobile, firestore} = props;
 
+    //whether there is a new announcement or not
+    const [newAnn, setNewAnn] = useState(false);
+
     //getting page text
     const [introText, setIntroText] = useState(introTextDefault);
     const [aboutText, setAboutText] = useState(aboutTextDefault);
@@ -80,12 +83,18 @@ export default function Home({props}) {
         e.preventDefault();
         navigate('/schedule');
     }
+    //route to announcements page
+    const toAnn = e => {
+        e.preventDefault();
+        navigate('/announcements');
+    }
 
     //hero image cropping
     var cropHero = useMediaQuery({query: '(max-width: 500px)'});
 
     return (
         <div className={"page home-page" + (mobile ? ' mobile' : '')}>
+            <Link onClick={toAnn} className='ann-banner ann-link'>{(newAnn ? '(New) ' : '') + 'Announcements/Court Availability!'}</Link>
             <div className='hero-div'>
                 <div className='slash'></div>
                 {cropHero ? 

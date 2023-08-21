@@ -7,6 +7,7 @@ import Layout from './pages/layout.js'
 import SchedulePage from './pages/schedule.js'
 import Tips from './pages/tips.js'
 import Contact from './pages/contact.js'
+import Announcements from './pages/announcements.js'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
 
@@ -65,6 +66,7 @@ export default function App() {
                         <Route path='schedule' element={<SchedulePage props={props} emailjsInfo={emailjsInfo}/>} />
                         <Route path='tips' element={<Tips props={props}/>} />
                         <Route path='contact' element={<Contact props={props} emailjsInfo={emailjsInfo}/>} />
+                        <Route path='announcements' element={<Announcements props={props}/>} />
                     </Route>
                 </Routes>
             </HashRouter>
